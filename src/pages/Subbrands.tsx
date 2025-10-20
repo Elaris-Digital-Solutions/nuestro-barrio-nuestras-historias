@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Award } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import salinaLogo from "@/assets/salina-logo.png";
+const salinaLogo = "/Logo.png";
 
 const SubbrandsPage = () => {
   useEffect(() => {

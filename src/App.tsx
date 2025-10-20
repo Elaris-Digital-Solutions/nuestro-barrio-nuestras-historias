@@ -1,26 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import Products from "./pages/Products";
-import About from "./pages/About";
-import Subbrands from "./pages/Subbrands";
-import Segments from "./pages/Segments";
-import Clients from "./pages/Clients";
-import Quote from "./pages/Quote";
-import { Toaster } from "@/components/ui/toaster";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import QuienesSomos from "./components/QuienesSomos";
+import Proyecto from "./components/Proyecto";
+import Exposicion from "./components/Exposicion";
+import Blog from "./components/Blog";
+import Recursos from "./components/Recursos";
+import Footer from "./components/Footer";
 
-const App = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/productos" element={<Products />} />
-      <Route path="/nosotros" element={<About />} />
-      <Route path="/submarcas" element={<Subbrands />} />
-      <Route path="/segmentos" element={<Segments />} />
-      <Route path="/clientes" element={<Clients />} />
-      <Route path="/cotizacion" element={<Quote />} />
-    </Routes>
-    <Toaster />
-  </Router>
-);
+const App = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <main className="relative z-10">
+        <Navbar />
+        <Hero />
+        <QuienesSomos />
+        <Proyecto />
+        <Exposicion />
+        <Blog />
+        <Recursos />
+        <Footer />
+      </main>
+    </div>
+  );
+};
 
 export default App;

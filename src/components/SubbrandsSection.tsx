@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import salinaLogo from "@/assets/salina-logo.png";
+const salinaLogo = "/Logo.png";
 
 const SubbrandsSection = () => {
   const subbrands = [

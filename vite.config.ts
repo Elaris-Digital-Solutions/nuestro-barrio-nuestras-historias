@@ -6,15 +6,12 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "127.0.0.1",
-    port: 5173,
+    port: 8080,
     strictPort: false,
     open: true,
   },
   plugins: [
-    react({
-      jsxRuntime: 'automatic',
-      jsxImportSource: 'react'
-    }),
+    react(),
   ],
   css: {
     devSourcemap: false,

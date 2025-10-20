@@ -1,5 +1,15 @@
+/*
+  Componente CardNav Mejorado:
+  - UI/UX y Animación: Se ha optado por un enfoque híbrido para mejorar las micro-interacciones sin alterar la compleja lógica de animación existente, que está gestionada por GSAP.
+  - Integración de Framer Motion: Se ha introducido Framer Motion específicamente para añadir feedback visual inmediato al interactuar con las tarjetas y los enlaces. Esto cumple el objetivo de unificar las micro-interacciones bajo una misma librería.
+  - Micro-interacciones Sutiles: 
+    - Las tarjetas ahora tienen un efecto `whileHover` que las eleva sutilmente (`y: -5`), proporcionando una sensación táctil y receptiva.
+    - Los enlaces dentro de las tarjetas también reaccionan al hover, escalando ligeramente para indicar claramente al usuario cuál es el elemento activo.
+  - Respeto por el Código Existente: La animación principal de despliegue y repliegue del menú, controlada por `gsap.timeline`, se ha mantenido intacta para garantizar la estabilidad y el rendimiento del componente.
+*/
 import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { motion } from 'framer-motion'; // Importado para micro-interacciones
 import { GoArrowUpRight } from 'react-icons/go';
 import './CardNav.css';
 
@@ -183,29 +193,43 @@ const CardNav = ({
             <img src={logo} alt={logoAlt} className="logo" />
           </div>
 
-          <button type="button" className="card-nav-cta-button" style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}>
+          <motion.button 
+            type="button" 
+            className="card-nav-cta-button" 
+            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
             {ctaText}
-          </button>
+          </motion.button>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>
           {(items || []).slice(0, 3).map((item, idx) => (
-            <div
+            <motion.div
               key={`${item.label}-${idx}`}
               className="nav-card"
               ref={setCardRef(idx)}
               style={{ backgroundColor: item.bgColor, color: item.textColor }}
+              whileHover={{ y: -5, transition: { type: 'spring', stiffness: 300 } }}
             >
               <div className="nav-card-label">{item.label}</div>
               <div className="nav-card-links">
                 {item.links?.map((lnk, i) => (
-                  <a key={`${lnk.label}-${i}`} className="nav-card-link" href={lnk.href} aria-label={lnk.ariaLabel}>
+                  <motion.a 
+                    key={`${lnk.label}-${i}`} 
+                    className="nav-card-link" 
+                    href={lnk.href} 
+                    aria-label={lnk.ariaLabel}
+                    whileHover={{ scale: 1.05, x: 2 }}
+                  >
                     <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
                     {lnk.label}
-                  </a>
+                  </motion.a>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </nav>
@@ -214,5 +238,4 @@ const CardNav = ({
 };
 
 export default CardNav;
-
 

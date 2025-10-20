@@ -1,6 +1,50 @@
+/*
+  Componente HeroSection Refactorizado:
+  - UI/UX y Animación: Se ha mejorado la secuencia de animación de entrada para que sea más limpia, declarativa y orquestada, utilizando las variantes de Framer Motion.
+  - Animación Escalonada (Stagger): Se introdujo un `container` de animación que aplica un efecto `staggerChildren`. Esto hace que el logo, el título, el subtítulo y los botones aparezcan en una secuencia fluida y natural, en lugar de hacerlo todos a la vez.
+  - Código Declarativo: Se reemplazaron las animaciones en línea (inline) por variantes reutilizables (`logoVariant`, `textVariant`, `buttonVariant`), haciendo el código más legible, mantenible y consistente con las mejores prácticas de Framer Motion.
+*/
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+
+// Variantes para la animación orquestada
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Tiempo entre la animación de cada hijo
+    },
+  },
+};
+
+const logoVariant = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { duration: 0.8, ease: "easeOut" }
+  },
+};
+
+const textVariant = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" }
+  },
+};
+
+const buttonVariant = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" }
+  },
+};
 
 const HeroSection = () => {
   const scrollToContact = () => {
@@ -21,59 +65,54 @@ const HeroSection = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img 
+        <motion.img 
           src="/assets/hero-image.jpg" 
           alt="Salinas de Kar & Ma" 
           className="w-full h-full object-cover"
+          initial={{ scale: 1.1, opacity: 0.8 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
         />
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-primary-dark/80" />
-
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-blue-400/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center min-h-screen justify-center py-8">
+      <motion.div 
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center min-h-screen justify-center py-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          variants={logoVariant}
           className="w-full flex justify-center mb-8"
         >
           <div className="max-w-4xl w-full">
             <img 
-              src="/assets/kar-ma-logo.png" 
-              alt="Kar & Ma" 
-              className="h-64 md:h-96 lg:h-[500px] w-auto mx-auto object-contain drop-shadow-2xl"
+              src="/Logo.png" 
+              alt="CICLOMIN"
+              className="h-24 md:h-32 lg:h-40 w-auto mx-auto object-contain drop-shadow-2xl"
             />
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mb-6"
-        >
+        <motion.div variants={textVariant} className="mb-6">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent px-4">
-            Excelencia en sal retail e industrial
+            Ciencia que conecta para transformar
           </h1>
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
+          variants={textVariant}
           className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 max-w-4xl mx-auto text-white/90 leading-relaxed px-4"
         >
-          Consorcio con 25 años de experiencia produciendo sal para empresas e industria local
+          Traducimos la complejidad del territorio en decisiones claras, soluciones accionables y cambios medibles.
         </motion.p>
 
         <div className="flex flex-col items-center gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            variants={buttonVariant}
             className="flex flex-col sm:flex-row gap-4 justify-center px-4 w-full max-w-2xl"
           >
             <Button 
@@ -86,18 +125,16 @@ const HeroSection = () => {
             <Button 
               onClick={scrollToNext}
               size="lg"
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 font-semibold transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-white hover:text-primary text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 font-semibold transition-all duration-300 hover:scale-105 w-full sm:w-auto"
             >
-              Conoce nuestros productos
+              Conoce más
             </Button>
           </motion.div>
 
-          {/* Descubre más centrado debajo */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            variants={textVariant} // Re-using text variant for a consistent entrance
+            className="flex flex-col items-center gap-2 cursor-pointer pt-8"
             onClick={scrollToNext}
           >
             <motion.div
@@ -110,7 +147,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
     </section>
   );

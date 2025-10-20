@@ -1,3 +1,9 @@
+/*
+  Componente BusinessSegmentsSection Refactorizado:
+  - UI/UX y Animación: Se ha estandarizado el sistema de animación para promover la cohesión y consistencia en toda la sección, y se han mejorado las micro-interacciones.
+  - Consistencia de Animación: Se reemplazó la implementación de `motion.div` en las tarjetas por el componente reutilizable `Reveal`. Esto asegura que todos los elementos de la sección (títulos y tarjetas) compartan la misma lógica de animación de entrada, creando una experiencia más unificada.
+  - Micro-interacciones Mejoradas: Se mantuvo el sutil efecto de elevación (`whileHover`) en las tarjetas para un feedback táctil. Adicionalmente, se añadió una animación de escala al botón principal de la tarjeta, proporcionando una respuesta visual más clara y satisfactoria a la interacción del usuario.
+*/
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,8 +19,6 @@ const BusinessSegmentsSection = () => {
       icon: Package,
       image: "/assets/retail-products.jpg",
       cta: "Ver productos comerciales",
-      gradient: "from-blue-50 to-blue-100",
-      hoverGradient: "from-blue-100 to-blue-200"
     },
     {
       id: "industrial",
@@ -23,8 +27,6 @@ const BusinessSegmentsSection = () => {
       icon: Factory,
       image: "/assets/industrial-facility.jpg",
       cta: "Ver soluciones industriales",
-      gradient: "from-slate-50 to-slate-100",
-      hoverGradient: "from-slate-100 to-slate-200"
     }
   ];
 
@@ -50,69 +52,61 @@ const BusinessSegmentsSection = () => {
           {segments.map((segment, index) => {
             const IconComponent = segment.icon;
             return (
-              <motion.div
-                key={segment.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8 }}
-                className="group"
-              >
-                <Card className="h-full overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-white to-gray-50">
-                  <div className="h-48 relative overflow-hidden">
-                    {/* Imagen de fondo */}
-                    <img 
-                      loading="lazy"
-                      decoding="async"
-                      src={segment.image} 
-                      alt={segment.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent group-hover:from-primary/30 group-hover:via-primary/20 transition-all duration-500" />
-                    {/* Icono */}
-                    <div className="absolute top-6 left-6">
-                      <div className="w-12 h-12 bg-white/90 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <IconComponent className="w-6 h-6 text-primary" />
+              <Reveal key={segment.id} delay={index * 0.2}>
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="group h-full"
+                >
+                  <Card className="h-full overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-shadow duration-500 bg-gradient-to-br from-white to-gray-50">
+                    <div className="h-48 relative overflow-hidden">
+                      <img 
+                        loading="lazy"
+                        decoding="async"
+                        src={segment.image} 
+                        alt={segment.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent group-hover:from-primary/30 group-hover:via-primary/20 transition-all duration-500" />
+                      <div className="absolute top-6 left-6">
+                        <div className="w-12 h-12 bg-white/90 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <IconComponent className="w-6 h-6 text-primary" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-6 right-6">
+                        <div className="w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:bg-white/30 transition-all duration-500" />
                       </div>
                     </div>
-                    {/* Elemento decorativo */}
-                    <div className="absolute bottom-6 right-6">
-                      <div className="w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:bg-white/30 transition-all duration-500" />
-                    </div>
-                  </div>
-                  
-                  <CardContent className="p-8">
-                    <motion.h3 
-                      className="text-2xl font-bold text-primary mb-4"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      {segment.title}
-                    </motion.h3>
                     
-                    <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
-                      {segment.description}
-                    </p>
-                    
-                    <Button 
-                      variant="outline" 
-                      className="group/btn w-full border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
-                    >
-                      <span className="flex items-center justify-center gap-2">
-                        {segment.cta}
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                      </span>
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    <CardContent className="p-8 flex flex-col">
+                      <h3 className="text-2xl font-bold text-primary mb-4">
+                        {segment.title}
+                      </h3>
+                      
+                      <p className="text-muted-foreground leading-relaxed mb-6 text-lg flex-grow">
+                        {segment.description}
+                      </p>
+                      
+                      <motion.div whileHover={{ scale: 1.03 }} className="transition-transform">
+                        <Button 
+                          variant="outline" 
+                          className="group/btn w-full border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
+                        >
+                          <span className="flex items-center justify-center gap-2">
+                            {segment.cta}
+                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                          </span>
+                        </Button>
+                      </motion.div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </Reveal>
             );
           })}
         </div>
 
         <div className="flex justify-center mt-12">
-          <Reveal delay={0.5} width="100%">
+          <Reveal delay={0.4} width="100%">
             <div className="text-center">
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                 Cada segmento cuenta con procesos de producción especializados y control de calidad 

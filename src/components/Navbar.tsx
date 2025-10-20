@@ -1,118 +1,115 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+/*
+  Componente Navbar Refactorizado (v3):
+  - Color de Fondo: La barra de navegación ahora transiciona al nuevo azul eléctrico (`#2563eb`) al hacer scroll.
+  - Indicador de Sección Activa: Se mantiene el indicador de color blanco para un contraste óptimo.
+  - Título: Se ha actualizado el título a "CICLOMIN" para reflejar la nueva identidad de marca.
+*/
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-export const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const Navbar = () => {
+  const [activeSection, setActiveSection] = useState('inicio');
+  
+  const { scrollY } = useScroll();
+  // Updated to use the new electric blue color #2563eb (37, 99, 235)
+  const navBackground = useTransform(scrollY, [0, 100], ["rgba(37, 99, 235, 0)", "rgba(37, 99, 235, 0.9)"]);
+  const navBackdropFilter = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(10px)"]);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 50); // Cambia el estado cuando el scroll pasa 50px
+      const sections = ['inicio', 'quienes-somos', 'proyecto', 'exposicion', 'blog', 'recursos'];
+      const current = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      
+      if (current && current !== activeSection) {
+        setActiveSection(current);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activeSection]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
-  return (
-    <>
-      <motion.nav
-        layout
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out',
-          isScrolled 
-            ? 'bg-primary/95 backdrop-blur-sm shadow-lg' 
-            : 'bg-transparent'
-        )}
-        initial={false}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link to="/">
-              <motion.img
-                src="/assets/kar-ma-logo.png"
-                alt="Kar & Ma"
-                className={cn(
-                  'transition-all duration-700 filter brightness-0 invert',
-                  isScrolled ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-16 md:h-16'
-                )}
-              />
-            </Link>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <NavLink href="/segmentos">Segmentos</NavLink>
-              <NavLink href="/nosotros">Nosotros</NavLink>
-              <NavLink href="/clientes">Clientes</NavLink>
-              <NavLink href="/cotizacion">Contacto</NavLink>
-            </div>
+  const navItems = [
+    { id: 'inicio', label: 'Inicio' },
+    { id: 'quienes-somos', label: '¿Quiénes somos?' },
+    { id: 'proyecto', label: 'Conoce el proyecto' },
+    { id: 'exposicion', label: 'Exposición fotográfica' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'recursos', label: 'Recursos libres' }
+  ];
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden text-white p-2"
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+  return (
+    <motion.nav 
+      style={{ 
+        backgroundColor: navBackground,
+        backdropFilter: navBackdropFilter 
+      }}
+      className="fixed top-0 left-0 right-0 z-50"
+    >
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
+          <motion.div 
+            className="text-xl font-bold text-white cursor-pointer"
+            onClick={() => scrollToSection('inicio')}
+            whileHover={{ scale: 1.02 }}
+          >
+            CICLOMIN
+          </motion.div>
+          
+          <div className="hidden md:flex items-center space-x-2">
+            {navItems.map(item => (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="relative px-3 py-2 text-sm font-medium text-white transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {item.label}
+                {activeSection === item.id && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-white"
+                    layoutId="active-underline"
+                    initial={false}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="md:hidden">
+            <button className="text-white p-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           </div>
         </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={false}
-        animate={{
-          height: isMobileMenuOpen ? 'auto' : 0,
-          opacity: isMobileMenuOpen ? 1 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-16 md:hidden left-0 right-0 z-40 bg-primary/95 backdrop-blur-sm overflow-hidden"
-      >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col space-y-4">
-            <NavLink href="/segmentos" onClick={() => setIsMobileMenuOpen(false)}>Segmentos</NavLink>
-            <NavLink href="/nosotros" onClick={() => setIsMobileMenuOpen(false)}>Nosotros</NavLink>
-            <NavLink href="/clientes" onClick={() => setIsMobileMenuOpen(false)}>Clientes</NavLink>
-            <NavLink href="/cotizacion" onClick={() => setIsMobileMenuOpen(false)}>Contacto</NavLink>
-          </div>
-        </div>
-      </motion.div>
-    </>
+      </div>
+    </motion.nav>
   );
 };
-
-const NavLink: React.FC<{ 
-  href: string; 
-  children: React.ReactNode; 
-  onClick?: () => void;
-}> = ({
-  href,
-  children,
-  onClick,
-}) => (
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-    <Link
-      to={href}
-      onClick={onClick}
-      className="text-white hover:text-white/80 font-medium text-lg transition-colors block py-2"
-    >
-      {children}
-    </Link>
-  </motion.div>
-);
 
 export default Navbar;
