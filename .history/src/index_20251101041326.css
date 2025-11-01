@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta CICLOMIN adaptada para el proyecto comunitario */
+    --background: 0 0% 100%;         /* Blanco */
+    --foreground: 207 65% 18%;       /* Azul oscuro CICLOMIN #0A2E4D */
+
+    /* Colores principales del manual CICLOMIN */
+    --azul-ciclomin: 207 65% 18%;      /* #0A2E4D - Azul institucional */
+    --verde-comunidad: 132 37% 25%;    /* #2E5339 - Verde oscuro para comunidades */
+    --oliva-sostenible: 63 53% 23%;    /* #59601C - Oliva para sostenibilidad */
+    --marron-territorio: 33 52% 37%;   /* #8F6B2C - Marrón/dorado para territorio */
+
+    --card: 0 0% 100%;
+    --card-foreground: var(--foreground);
+
+    --popover: var(--background);
+    --popover-foreground: var(--foreground);
+
+    --primary: var(--azul-ciclomin);     /* Azul CICLOMIN como principal */
+    --primary-foreground: 0 0% 98%;      /* Blanco para contraste */
+
+    --secondary: var(--verde-comunidad); /* Verde para elementos comunitarios */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 210 40% 40%;
+
+    --accent: var(--oliva-sostenible);   /* Oliva para acentos */
+    --accent-foreground: var(--primary-foreground);
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: var(--primary-foreground);
+
+    --border: 210 40% 90%;
+    --input: var(--border);
+    --ring: var(--azul-ciclomin);
+
+    --radius: 0.5rem;
+
+    /* Variables adicionales para el proyecto */
+    --territorio-color: var(--marron-territorio);
+    --comunidad-color: var(--verde-comunidad);
+    --memoria-color: var(--oliva-sostenible);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Century Gothic', 'Arial', 'Helvetica', sans-serif; /* Tipografía del manual CICLOMIN */
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Lucida Fax', serif; /* Tipografía elegante para títulos */
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    line-height: 1.2;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+  }
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  p {
+    font-family: 'Century Gothic', 'Arial', 'Helvetica', sans-serif;
+    line-height: 1.7;
+  }
+}
+
+/* Legacy Styles Adapted for Light Theme */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-transparent {
+  background: transparent;
+}
+
+.navbar-scrolled {
+  background: hsla(var(--background), 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg, 
+    hsla(var(--azul-ciclomin), 0.7) 0%,
+    hsla(var(--verde-comunidad), 0.6) 50%,
+    hsla(var(--marron-territorio), 0.7) 100%
+  );
+  backdrop-filter: blur(1px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  color: hsl(var(--primary-foreground));
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Section Styles */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 2rem;
+  min-height: 50vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-white {
+  background: hsl(var(--background));
+}
+
+.section-light {
+  background-color: hsl(var(--muted));
+  position: relative;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: hsl(var(--primary));
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-content {
+  width: 100%;
+  max-width: 1200px;
+  color: hsl(var(--foreground));
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: hsl(var(--foreground));
+  color: hsl(var(--muted-foreground));
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+/* Card Styles */
+.methodology-card {
+  background: hsl(var(--card));
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid hsl(var(--border));
+}
+
+.methodology-card:hover {
+  transform: translateY(-8px);
+  border-color: hsla(var(--primary), 0.5);
+  box-shadow: 0 10px 30px hsla(var(--primary), 0.1);
+}

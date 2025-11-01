@@ -1,62 +1,76 @@
-import { motion } from 'framer-motion';
-import { Mail, Heart } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 
 const Footer = () => {
-  return (
-    <footer className="footer">
-      <div className="footer-content">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="text-lg font-semibold text-primary-foreground mb-4 flex items-center gap-2">
-            Equipo <Heart size={20} className="text-primary-foreground" />
-          </h3>
-          <p className="leading-relaxed opacity-90">
-            Proyecto liderado por la Lic. Daniela Bussalleu Salcedo (Universidad de Lima), 
-            con la asesoría de Maribel Goncálves de Freitas, PhD (Pontificia Universidad 
-            Católica del Perú), Raúl Loayza-Muro y Bram Leo Willems, PhD (Universidad Peruana 
-            Cayetano Heredia), y la colaboración de Activos Mineros S.A.C.
-          </p>
-          <p className="mt-4 leading-relaxed opacity-90">
-            El proyecto cuenta también con la participación de jóvenes voluntarios y 
-            estudiantes locales comprometidos con la reconstrucción de la memoria colectiva 
-            de La Oroya.
-          </p>
-        </motion.div>
+  const navigation = [
+    { name: "Inicio", href: "#inicio" },
+    { name: "El Proyecto", href: "#proyecto" },
+    { name: "Historias", href: "#historias" },
+    { name: "Participa", href: "#participa" },
+  ];
 
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <h3 className="text-lg font-semibold text-primary-foreground mb-4">Contacto</h3>
-          <motion.div 
-            className="flex items-center space-x-2"
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Mail className="w-5 h-5" />
-            <a 
-              href="mailto:daniela.bussalleu@upch.pe" 
-              className="hover:underline transition-colors"
-            >
-              daniela.bussalleu@upch.pe
-            </a>
-          </motion.div>
-          
-          <div className="mt-8 pt-8 border-t border-white/10">
-            <p className="text-sm opacity-80">
-              © 2025 Nuestro barrio, nuestras historias
-            </p>
-            <p className="text-sm opacity-80 mt-1">
-              CICLOMIN - UPCH | PUCP
+  const socialLinks = [
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Mail, href: "mailto:contacto@nuestrobarrio.org", label: "Email" },
+  ];
+
+  return (
+    <footer className="bg-brown text-primary-foreground">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
+          {/* Logo and Description */}
+          <div className="space-y-4">
+            <img src={logo} alt="Nuestro Barrio, Nuestras Historias" className="h-16 w-auto" />
+            <p className="text-primary-foreground/80 text-sm leading-relaxed">
+              Rescatando, preservando y compartiendo las historias que hacen única a nuestra comunidad.
             </p>
           </div>
-        </motion.div>
+
+          {/* Navigation */}
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Navegación</h3>
+            <ul className="space-y-2">
+              {navigation.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Contacto</h3>
+            <div className="space-y-2 text-sm text-primary-foreground/80">
+              <p>Email: contacto@nuestrobarrio.org</p>
+              <p>Teléfono: +123 456 7890</p>
+              <div className="flex gap-4 mt-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 flex items-center justify-center transition-colors"
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-primary-foreground/20 text-center text-sm text-primary-foreground/70">
+          <p>&copy; {new Date().getFullYear()} Nuestro Barrio, Nuestras Historias. Todos los derechos reservados.</p>
+        </div>
       </div>
     </footer>
   );
