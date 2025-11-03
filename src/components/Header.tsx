@@ -20,7 +20,7 @@ const Header = () => {
     visible: {
       opacity: 1,
       y: 0,
-  transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
     },
   };
 

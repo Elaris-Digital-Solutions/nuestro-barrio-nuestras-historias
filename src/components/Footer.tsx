@@ -1,5 +1,4 @@
 import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
-import logo from "@/assets/logo.jpg";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
 
@@ -31,7 +30,7 @@ const Footer = () => {
           {/* Logo and Description */}
           <motion.div className="space-y-4" variants={fadeInUp(0.1)}>
             <motion.img
-              src={logo}
+              src="/assets/CICLOMIN.png"
               alt="Nuestro Barrio, Nuestra Historia"
               className="h-16 w-auto"
               whileHover={{ rotate: 2 }}
