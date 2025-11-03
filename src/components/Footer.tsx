@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
+import { Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
 
@@ -11,10 +11,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Mail, href: "mailto:contacto@nuestrobarrio.org", label: "Email" },
+    { icon: Instagram, href: "https://www.instagram.com/daniela.bussalleu?igsh=cXptdDJ5OGZoZmhs", label: "Instagram académico" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/daniela-bussalleu", label: "LinkedIn" },
+    { icon: Phone, href: "tel:+51902749147", label: "Teléfono" },
+    { icon: Mail, href: "mailto:daniela.bussalleu@upch.pe", label: "Email" },
   ];
 
   return (
@@ -66,8 +66,8 @@ const Footer = () => {
           <motion.div variants={fadeInUp(0.2)}>
             <h3 className="font-semibold text-lg mb-4">Contacto</h3>
             <div className="space-y-2 text-sm text-primary-foreground/80">
-              <p>Email: contacto@nuestrobarrio.org</p>
-              <p>Teléfono: +123 456 7890</p>
+              <p>Email: daniela.bussalleu@upch.pe</p>
+              <p>Teléfono: +51 902 749 147</p>
               <div className="flex gap-4 mt-4">
                 {socialLinks.map((social) => (
                   <motion.a
