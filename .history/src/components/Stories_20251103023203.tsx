@@ -27,32 +27,30 @@ const stories = [
 ];
 
 const Stories = () => {
-  const navigate = useNavigate();
-
   return (
     <motion.section
       id="historias"
-      className="py-12 sm:py-16 lg:py-20 bg-muted/30"
+      className="py-20 bg-muted/30"
       initial="hidden"
       whileInView="visible"
       viewport={viewportSettings}
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-12 sm:mb-16" variants={staggerChildren(0.15)}>
-          <motion.h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
+          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
             Nuestras <span className="text-primary">Historias</span>
           </motion.h2>
-          <motion.p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4" variants={fadeInUp(0.2)}>
+          <motion.p className="text-lg text-muted-foreground max-w-2xl mx-auto" variants={fadeInUp(0.2)}>
             Descubre las historias que dan vida a nuestro barrio
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12" variants={staggerChildren(0.12, 0.1)}>
+        <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" variants={staggerChildren(0.12, 0.1)}>
           {stories.map((story) => (
             <motion.div key={story.title} variants={fadeInUp()}>
-              <Card className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 overflow-hidden h-full">
-                <div className="relative h-48 sm:h-56 overflow-hidden">
+              <Card className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
                   <motion.img
                     src={story.image}
                     alt={story.title}
@@ -62,20 +60,20 @@ const Stories = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
-                <CardContent className="p-4 sm:p-6 space-y-3 flex-1">
+                <CardContent className="p-6 space-y-3">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Calendar className="w-4 h-4" />
                     <span>{story.date}</span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
                     {story.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {story.excerpt}
                   </p>
                 </CardContent>
-                <CardFooter className="px-4 sm:px-6 pb-4 sm:pb-6">
-                  <Button variant="link" className="p-0 h-auto touch-manipulation">
+                <CardFooter className="px-6 pb-6">
+                  <Button variant="link" className="p-0 h-auto">
                     Leer más →
                   </Button>
                 </CardFooter>
@@ -85,12 +83,7 @@ const Stories = () => {
         </motion.div>
 
         <motion.div className="text-center" variants={fadeInUp(0.2)}>
-          <Button 
-            variant="outline" 
-            size="lg"
-            onClick={() => navigate("/historias")}
-            className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg touch-manipulation"
-          >
+          <Button variant="outline" size="lg">
             Ver Todas las Historias
           </Button>
         </motion.div>

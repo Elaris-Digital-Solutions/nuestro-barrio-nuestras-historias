@@ -86,25 +86,25 @@ const Purpose = () => {
         </motion.div>
 
         {/* Navigation */}
-        <motion.div className="mt-12 sm:mt-16 flex items-center justify-center gap-4 sm:gap-8" variants={fadeInUp(0.3)}>
+        <motion.div className="mt-16 flex items-center justify-center gap-8" variants={fadeInUp(0.3)}>
           <Button
             type="button"
             onClick={goToPrevious}
             variant="ghost"
             size="icon"
-            className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border border-border transition-all duration-300 hover:bg-primary hover:text-primary-foreground touch-manipulation"
+            className="h-12 w-12 rounded-full border border-border transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
           >
-            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </Button>
 
-          <div className="flex gap-2 sm:gap-3">
+          <div className="flex gap-3">
             {PURPOSE_SECTIONS.map((section, sectionIndex) => (
               <motion.button
                 key={section.id}
                 type="button"
                 onClick={() => setCurrentIndex(sectionIndex)}
-                className={`h-2 rounded-full transition-all duration-300 touch-manipulation ${
-                  sectionIndex === currentIndex ? 'w-6 sm:w-8 bg-primary' : 'w-2 bg-border hover:bg-primary/60'
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  sectionIndex === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-border hover:bg-primary/60'
                 }`}
                 aria-label={`Ver ${section.title}`}
                 whileHover={{ scale: 1.3 }}
@@ -118,9 +118,9 @@ const Purpose = () => {
             onClick={goToNext}
             variant="ghost"
             size="icon"
-            className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border border-border transition-all duration-300 hover:bg-primary hover:text-primary-foreground touch-manipulation"
+            className="h-12 w-12 rounded-full border border-border transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
           >
-            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+            <ChevronRight className="h-5 w-5" />
           </Button>
         </motion.div>
       </div>

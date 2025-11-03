@@ -63,21 +63,21 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="flex items-center justify-between h-16 sm:h-20"
+          className="flex items-center justify-between h-20"
           variants={fadeIn()}
           initial="hidden"
           animate="visible"
         >
           {/* Logo */}
           <motion.div 
-            className="flex items-center gap-2 sm:gap-3 cursor-pointer" 
+            className="flex items-center gap-3 cursor-pointer" 
             variants={fadeInUp(0.05)}
             onClick={() => navigate("/")}
           >
             <motion.img
               src={logo}
               alt="Nuestro Barrio, Nuestra Historia"
-              className="h-10 sm:h-14 w-auto"
+              className="h-14 w-auto"
               whileHover={{ rotate: -4 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
             />
@@ -111,7 +111,7 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-3 rounded-lg hover:bg-muted transition-colors touch-manipulation"
+            className="md:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label="Alternar menú"
             whileTap={{ scale: 0.9 }}
@@ -124,7 +124,7 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden py-6 space-y-2 border-t border-border bg-background/95 backdrop-blur-sm"
+              className="md:hidden py-4 space-y-3 border-t border-border"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -134,7 +134,7 @@ const Header = () => {
                 <motion.button
                   key={item.name}
                   onClick={() => handleNavigation(item)}
-                  className="block w-full text-left px-6 py-4 text-foreground hover:bg-muted rounded-lg transition-colors touch-manipulation text-lg font-medium"
+                  className="block w-full text-left px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
@@ -144,13 +144,13 @@ const Header = () => {
                 </motion.button>
               ))}
               <motion.div
-                className="px-6 pt-4"
+                className="px-4 pt-2"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.25, ease: "easeOut", delay: 0.2 }}
               >
-                <Button variant="hero" size="lg" className="w-full h-12 text-base touch-manipulation">
+                <Button variant="hero" size="lg" className="w-full">
                   Únete
                 </Button>
               </motion.div>

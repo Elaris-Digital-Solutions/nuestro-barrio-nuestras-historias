@@ -36,7 +36,7 @@ const Hero = () => {
           <span className="text-primary">Nuestra Historia</span>
         </motion.h1>
         <motion.p
-          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed"
+          className="text-xl sm:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
         >
@@ -47,10 +47,10 @@ const Hero = () => {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
         >
-          <Button variant="hero" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto touch-manipulation">
+          <Button variant="hero" size="lg" className="text-lg px-8 py-6">
             Conoce Más
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto touch-manipulation">
+          <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
             <a href="#historias">Ver Historias</a>
           </Button>
         </motion.div>

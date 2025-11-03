@@ -147,13 +147,13 @@ const CarouselControl = ({
 }: CarouselControlProps) => {
   return (
     <button
-      className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center mx-2 sm:mx-3 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 touch-manipulation ${
+      className={`w-10 h-10 flex items-center mx-2 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
         type === "previous" ? "rotate-180" : ""
       }`}
       title={title}
       onClick={handleClick}
     >
-      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200 w-4 h-4 sm:w-5 sm:h-5" />
+      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200" />
     </button>
   );
 };
@@ -185,11 +185,11 @@ export function Carousel({ slides }: CarouselProps) {
 
   return (
     <div
-      className="relative w-full max-w-6xl mx-auto"
+      className="relative w-full max-w-4xl mx-auto overflow-hidden"
       aria-labelledby={`carousel-heading-${id}`}
     >
-      <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px] overflow-hidden">
-        <div
+      <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px]">
+        <ul
           className="flex h-full transition-transform duration-1000 ease-in-out"
           style={{
             width: `${slides.length * 100}%`,
@@ -205,34 +205,19 @@ export function Carousel({ slides }: CarouselProps) {
               handleSlideClick={handleSlideClick}
             />
           ))}
-        </div>
+        </ul>
       </div>
 
-      <div className="flex justify-center w-full mt-6 sm:mt-8">
+      <div className="flex justify-center w-full mt-6">
         <CarouselControl
           type="previous"
-          title="Ir a la imagen anterior"
+          title="Go to previous slide"
           handleClick={handlePreviousClick}
         />
 
-        <div className="flex items-center gap-2 sm:gap-3 mx-4 sm:mx-6">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrent(index)}
-              className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 touch-manipulation ${
-                index === current 
-                  ? 'bg-primary w-6 sm:w-8' 
-                  : 'bg-muted-foreground/30 hover:bg-muted-foreground/60'
-              }`}
-              aria-label={`Ir a la imagen ${index + 1}`}
-            />
-          ))}
-        </div>
-
         <CarouselControl
           type="next"
-          title="Ir a la siguiente imagen"
+          title="Go to next slide"
           handleClick={handleNextClick}
         />
       </div>

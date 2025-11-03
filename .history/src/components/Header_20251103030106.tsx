@@ -124,7 +124,7 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden py-6 space-y-2 border-t border-border bg-background/95 backdrop-blur-sm"
+              className="md:hidden py-4 space-y-3 border-t border-border"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}

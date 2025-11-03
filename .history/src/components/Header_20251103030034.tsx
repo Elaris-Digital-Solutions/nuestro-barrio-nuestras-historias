@@ -111,7 +111,7 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-3 rounded-lg hover:bg-muted transition-colors touch-manipulation"
+            className="md:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label="Alternar menú"
             whileTap={{ scale: 0.9 }}
@@ -124,7 +124,7 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden py-6 space-y-2 border-t border-border bg-background/95 backdrop-blur-sm"
+              className="md:hidden py-4 space-y-3 border-t border-border"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -134,7 +134,7 @@ const Header = () => {
                 <motion.button
                   key={item.name}
                   onClick={() => handleNavigation(item)}
-                  className="block w-full text-left px-6 py-4 text-foreground hover:bg-muted rounded-lg transition-colors touch-manipulation text-lg font-medium"
+                  className="block w-full text-left px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
@@ -144,13 +144,13 @@ const Header = () => {
                 </motion.button>
               ))}
               <motion.div
-                className="px-6 pt-4"
+                className="px-4 pt-2"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.25, ease: "easeOut", delay: 0.2 }}
               >
-                <Button variant="hero" size="lg" className="w-full h-12 text-base touch-manipulation">
+                <Button variant="hero" size="lg" className="w-full">
                   Únete
                 </Button>
               </motion.div>
