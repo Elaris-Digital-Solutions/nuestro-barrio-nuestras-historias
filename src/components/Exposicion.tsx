@@ -42,14 +42,20 @@ const Exposicion = () => {
           </motion.h2>
           <motion.p className="text-lg text-muted-foreground max-w-3xl mx-auto" variants={fadeInUp(0.2)}>
             En esta sección se presentarán las fotografías y textos elaborados durante el proceso de fotovoz, resultado del trabajo
-            reflexivo y creativo de las/os participantes. A través de estas imágenes y relatos, buscamos visibilizar las miradas,
-            experiencias y mensajes de la comunidad.
+            reflexivo y creativo de las/os participantes.
           </motion.p>
         </motion.div>
 
         <motion.div variants={fadeInUp(0.2)}>
           <Carousel slides={slides} />
         </motion.div>
+
+        <motion.p
+          className="text-lg text-muted-foreground max-w-3xl mx-auto mt-16 md:mt-20 text-center"
+          variants={fadeInUp(0.3)}
+        >
+          A través de estas imágenes y relatos, buscamos visibilizar las miradas, experiencias y mensajes de la comunidad.
+        </motion.p>
       </div>
     </motion.section>
   );
