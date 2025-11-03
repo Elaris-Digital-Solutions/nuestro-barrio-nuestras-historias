@@ -50,8 +50,8 @@ const Hero = () => {
           <Button variant="hero" size="lg" className="text-lg px-8 py-6">
             Conoce Más
           </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-            Ver Historias
+          <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
+            <a href="#historias">Ver Historias</a>
           </Button>
         </motion.div>
       </div>

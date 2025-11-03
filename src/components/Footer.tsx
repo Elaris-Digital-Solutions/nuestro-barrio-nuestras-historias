@@ -34,7 +34,7 @@ const Footer = () => {
             <motion.img
               src="/assets/CICLOMIN.png"
               alt="Nuestro Barrio, Nuestra Historia"
-              className="h-16 w-auto"
+              className="h-20 w-auto md:h-24"
               whileHover={{ rotate: 2 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
             />
@@ -67,9 +67,30 @@ const Footer = () => {
           {/* Contact */}
           <motion.div variants={fadeInUp(0.2)}>
             <h3 className="font-semibold text-lg mb-4">Contacto</h3>
-            <div className="space-y-2 text-sm text-primary-foreground/80">
-              <p>Email: daniela.bussalleu@upch.pe</p>
-              <p>Teléfono: +51 902 749 147</p>
+            <div className="space-y-3 text-sm text-primary-foreground/80">
+              <a
+                href="mailto:daniela.bussalleu@upch.pe"
+                className="flex items-center gap-3 hover:text-primary-foreground transition-colors"
+              >
+                <Mail className="w-5 h-5" />
+                <span>daniela.bussalleu@upch.pe</span>
+              </a>
+              <a
+                href="tel:+51902749147"
+                className="flex items-center gap-3 hover:text-primary-foreground transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                <span>+51 902 749 147</span>
+              </a>
+              <a
+                href="https://www.instagram.com/daniela.bussalleu?igsh=cXptdDJ5OGZoZmhs"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 hover:text-primary-foreground transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+                <span>@daniela.bussalleu</span>
+              </a>
               <div className="flex gap-4 mt-4">
                 {socialLinks.map((social) => (
                   <motion.a

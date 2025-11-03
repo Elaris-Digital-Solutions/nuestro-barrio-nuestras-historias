@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.jpg";
+const logo = "/assets/logo.png";
 import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
 
 const Header = () => {
