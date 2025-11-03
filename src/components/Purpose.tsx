@@ -2,13 +2,15 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import purposeImage from "@/assets/community-purpose.jpg";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const PURPOSE_SECTIONS = [
   {
     id: "proposito",
     title: "Propósito",
     description: [
-      "Nuestro Barrio, Nuestras Historias es un proyecto comunitario dedicado a rescatar, preservar y compartir las historias que hacen única a nuestra comunidad.",
+  "Nuestro Barrio, Nuestra Historia es un proyecto comunitario dedicado a rescatar, preservar y compartir las historias que hacen única a nuestra comunidad.",
       "Creemos que cada vecino tiene una historia valiosa que contar, y que al compartirlas, fortalecemos los lazos que nos unen y construimos un sentido más profundo de pertenencia.",
       "A través de testimonios, fotografías, documentos y recuerdos, estamos tejiendo la memoria colectiva de nuestro barrio para las generaciones presentes y futuras."
     ]
@@ -46,33 +48,48 @@ const Purpose = () => {
 
   const currentSection = PURPOSE_SECTIONS[currentIndex];
   return (
-    <section id="proyecto" className="py-20 bg-muted/30">
+    <motion.section
+      id="proyecto"
+      className="py-20 bg-muted/30"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={fadeIn()}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <motion.div className="grid md:grid-cols-2 gap-12 items-center" variants={staggerChildren(0.18)}>
           {/* Image */}
-          <div className="order-2 md:order-1">
-            <img
+          <motion.div className="order-2 md:order-1" variants={fadeInUp(0.1)}>
+            <motion.img
               src={purposeImage}
               alt="Comunidad compartiendo historias"
               className="rounded-2xl shadow-[var(--shadow-soft)] w-full h-auto"
+              initial={{ scale: 0.92, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={viewportSettings}
             />
-          </div>
+          </motion.div>
 
           {/* Content */}
-          <div className="order-1 md:order-2 space-y-6">
-            <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+          <motion.div className="order-1 md:order-2 space-y-6" variants={staggerChildren(0.12)}>
+            <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground" variants={fadeInUp(0.15)}>
               Nuestro <span className="text-primary">{currentSection.title}</span>
-            </h2>
+            </motion.h2>
             {currentSection.description.map((paragraph, index) => (
-              <p key={index} className="text-lg text-muted-foreground leading-relaxed">
+              <motion.p
+                key={index}
+                className="text-lg text-muted-foreground leading-relaxed"
+                variants={fadeInUp(0.2 + index * 0.1)}
+              >
                 {paragraph}
-              </p>
+              </motion.p>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Navigation */}
-        <div className="mt-16 flex items-center justify-center gap-8">
+        <motion.div className="mt-16 flex items-center justify-center gap-8" variants={fadeInUp(0.3)}>
           <Button
             type="button"
             onClick={goToPrevious}
@@ -85,7 +102,7 @@ const Purpose = () => {
 
           <div className="flex gap-3">
             {PURPOSE_SECTIONS.map((section, sectionIndex) => (
-              <button
+              <motion.button
                 key={section.id}
                 type="button"
                 onClick={() => setCurrentIndex(sectionIndex)}
@@ -93,6 +110,8 @@ const Purpose = () => {
                   sectionIndex === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-border hover:bg-primary/60'
                 }`}
                 aria-label={`Ver ${section.title}`}
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
               />
             ))}
           </div>
@@ -106,9 +125,9 @@ const Purpose = () => {
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

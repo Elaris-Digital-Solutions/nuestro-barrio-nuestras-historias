@@ -23,7 +23,7 @@ const QuienesSomos = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="mb-6 text-lg leading-relaxed">
-              "Nuestro barrio, nuestras historias" es un proyecto interdisciplinario que combina 
+              "Nuestro Barrio, Nuestra Historia" es un proyecto interdisciplinario que combina 
               psicología comunitaria, comunicación para el desarrollo y ciencia ambiental, con el 
               propósito de documentar, reflexionar y compartir las memorias colectivas de La Oroya 
               desde la mirada de sus propios habitantes.

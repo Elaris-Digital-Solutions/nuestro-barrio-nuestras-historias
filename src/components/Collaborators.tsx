@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+
 const collaborators = [
   { name: "Biblioteca Municipal", logo: "📚" },
   { name: "Centro Comunitario", logo: "🏛️" },
@@ -9,35 +12,47 @@ const collaborators = [
 
 const Collaborators = () => {
   return (
-    <section id="participa" className="py-20 bg-background">
+    <motion.section
+      id="participa"
+      className="py-20 bg-background"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={fadeIn()}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
+          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
             Vecinos que <span className="text-primary">Suman</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p className="text-lg text-muted-foreground max-w-2xl mx-auto" variants={fadeInUp(0.2)}>
             Organizaciones y colectivos que apoyan y colaboran con nuestro proyecto
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-          {collaborators.map((collaborator, index) => (
-            <div
+        <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center" variants={staggerChildren(0.1)}>
+          {collaborators.map((collaborator) => (
+            <motion.div
               key={collaborator.name}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-muted/50 hover:bg-muted transition-all duration-300 hover:-translate-y-1 group"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="flex flex-col items-center justify-center p-6 rounded-xl bg-muted/50 transition-all duration-300 group"
+              variants={scaleIn()}
+              whileHover={{ y: -6, scale: 1.02 }}
             >
-              <div className="text-6xl mb-3 group-hover:scale-110 transition-transform duration-300">
+              <motion.div
+                className="text-6xl mb-3"
+                whileHover={{ rotate: [0, -6, 6, 0] }}
+                transition={{ duration: 0.6 }}
+              >
                 {collaborator.logo}
-              </div>
+              </motion.div>
               <p className="text-sm text-center text-muted-foreground font-medium">
                 {collaborator.name}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

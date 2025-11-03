@@ -1,6 +1,8 @@
 import { Calendar } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const stories = [
   {
@@ -25,60 +27,67 @@ const stories = [
 
 const Stories = () => {
   return (
-    <section id="historias" className="py-20 bg-muted/30">
+    <motion.section
+      id="historias"
+      className="py-20 bg-muted/30"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={fadeIn()}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
+          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
             Nuestras <span className="text-primary">Historias</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p className="text-lg text-muted-foreground max-w-2xl mx-auto" variants={fadeInUp(0.2)}>
             Descubre las historias que dan vida a nuestro barrio
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {stories.map((story, index) => (
-            <Card
-              key={story.title}
-              className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={story.image}
-                  alt={story.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              </div>
-              <CardContent className="p-6 space-y-3">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Calendar className="w-4 h-4" />
-                  <span>{story.date}</span>
+        <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" variants={staggerChildren(0.12, 0.1)}>
+          {stories.map((story) => (
+            <motion.div key={story.title} variants={fadeInUp()}>
+              <Card className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
+                  <motion.img
+                    src={story.image}
+                    alt={story.title}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
-                <h3 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                  {story.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {story.excerpt}
-                </p>
-              </CardContent>
-              <CardFooter className="px-6 pb-6">
-                <Button variant="link" className="p-0 h-auto">
-                  Leer más →
-                </Button>
-              </CardFooter>
-            </Card>
+                <CardContent className="p-6 space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Calendar className="w-4 h-4" />
+                    <span>{story.date}</span>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {story.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {story.excerpt}
+                  </p>
+                </CardContent>
+                <CardFooter className="px-6 pb-6">
+                  <Button variant="link" className="p-0 h-auto">
+                    Leer más →
+                  </Button>
+                </CardFooter>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center">
+        <motion.div className="text-center" variants={fadeInUp(0.2)}>
           <Button variant="outline" size="lg">
             Ver Todas las Historias
           </Button>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

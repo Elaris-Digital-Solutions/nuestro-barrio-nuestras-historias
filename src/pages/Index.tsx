@@ -6,21 +6,25 @@ import Stories from "@/components/Stories";
 import Collaborators from "@/components/Collaborators";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/lib/motion";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <motion.div className="min-h-screen" initial="hidden" animate="visible" variants={fadeIn()}
+      transition={{ duration: 0.5 }}
+    >
       <Header />
-      <main>
+      <motion.main variants={fadeIn()}>
         <Hero />
         <Purpose />
         <Pillars />
         <Stories />
         <Collaborators />
         <Newsletter />
-      </main>
+      </motion.main>
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 

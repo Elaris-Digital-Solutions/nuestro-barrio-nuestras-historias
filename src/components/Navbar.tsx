@@ -2,7 +2,7 @@
   Componente Navbar Refactorizado (v4):
   - Color de Fondo: La barra de navegación ahora transiciona al verde del proyecto comunitario al hacer scroll.
   - Indicador de Sección Activa: Se mantiene el indicador de color blanco para un contraste óptimo.
-  - Título: Actualizado para reflejar el proyecto "Nuestro barrio, nuestras historias".
+  - Título: Actualizado para reflejar el proyecto "Nuestro barrio, nuestra historia".
 */
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';

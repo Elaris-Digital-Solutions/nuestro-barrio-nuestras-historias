@@ -1,5 +1,7 @@
 import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 import logo from "@/assets/logo.jpg";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const Footer = () => {
   const navigation = [
@@ -17,62 +19,84 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-brown text-primary-foreground">
+    <motion.footer
+      className="bg-brown text-primary-foreground"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={fadeIn()}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <motion.div className="grid md:grid-cols-3 gap-8 mb-8" variants={staggerChildren(0.18)}>
           {/* Logo and Description */}
-          <div className="space-y-4">
-            <img src={logo} alt="Nuestro Barrio, Nuestras Historias" className="h-16 w-auto" />
-            <p className="text-primary-foreground/80 text-sm leading-relaxed">
+          <motion.div className="space-y-4" variants={fadeInUp(0.1)}>
+            <motion.img
+              src={logo}
+              alt="Nuestro Barrio, Nuestra Historia"
+              className="h-16 w-auto"
+              whileHover={{ rotate: 2 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18 }}
+            />
+            <motion.p
+              className="text-primary-foreground/80 text-sm leading-relaxed"
+              variants={fadeInUp(0.2)}
+            >
               Rescatando, preservando y compartiendo las historias que hacen única a nuestra comunidad.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           {/* Navigation */}
-          <div>
+          <motion.div variants={fadeInUp(0.15)}>
             <h3 className="font-semibold text-lg mb-4">Navegación</h3>
-            <ul className="space-y-2">
+            <motion.ul className="space-y-2" variants={staggerChildren(0.08)}>
               {navigation.map((item) => (
-                <li key={item.name}>
-                  <a
+                <motion.li key={item.name} variants={fadeInUp(0.1)}>
+                  <motion.a
                     href={item.href}
                     className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                    whileHover={{ x: 4 }}
                   >
                     {item.name}
-                  </a>
-                </li>
+                  </motion.a>
+                </motion.li>
               ))}
-            </ul>
-          </div>
+            </motion.ul>
+          </motion.div>
 
           {/* Contact */}
-          <div>
+          <motion.div variants={fadeInUp(0.2)}>
             <h3 className="font-semibold text-lg mb-4">Contacto</h3>
             <div className="space-y-2 text-sm text-primary-foreground/80">
               <p>Email: contacto@nuestrobarrio.org</p>
               <p>Teléfono: +123 456 7890</p>
               <div className="flex gap-4 mt-4">
                 {socialLinks.map((social) => (
-                  <a
+                  <motion.a
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-10 h-10 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 flex items-center justify-center transition-colors"
+                    className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center"
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
                   >
                     <social.icon className="w-5 h-5" />
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-primary-foreground/20 text-center text-sm text-primary-foreground/70">
-          <p>&copy; {new Date().getFullYear()} Nuestro Barrio, Nuestras Historias. Todos los derechos reservados.</p>
-        </div>
+        <motion.div
+          className="pt-8 border-t border-primary-foreground/20 text-center text-sm text-primary-foreground/70"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        >
+          <p>&copy; {new Date().getFullYear()} Nuestro Barrio, Nuestra Historia. Todos los derechos reservados.</p>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
