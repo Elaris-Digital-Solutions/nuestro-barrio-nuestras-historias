@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Purpose from "@/components/Purpose";
 import Pillars from "@/components/Pillars";
 import Stories from "@/components/Stories";
+import Exposicion from "@/components/Exposicion";
 import Collaborators from "@/components/Collaborators";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
@@ -19,7 +20,8 @@ const Index = () => {
         <Hero />
         <Purpose />
         <Pillars />
-        <Stories />
+  <Stories />
+  <Exposicion />
         <Collaborators />
         <Newsletter />
       </motion.main>

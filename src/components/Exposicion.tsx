@@ -1,64 +1,57 @@
-import { motion } from 'framer-motion';
-import { Image } from 'lucide-react';
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
+import { Carousel } from "@/components/ui/carousel";
+
+const slides = [
+  {
+    title: "Miradas desde el puente",
+    button: "Ver historia",
+    src: "https://images.unsplash.com/photo-1445510861639-5651173bc5d5?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+  },
+  {
+    title: "Voces de la plaza",
+    button: "Ver historia",
+    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+  },
+  {
+    title: "Memorias del río",
+    button: "Ver historia",
+    src: "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+  },
+  {
+    title: "Retratos del barrio",
+    button: "Ver historia",
+    src: "https://images.unsplash.com/photo-1499891334380-5cf80f1ebf2c?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+  },
+];
 
 const Exposicion = () => {
   return (
-    <section id="exposicion" className="section section-white">
-      <motion.h2 
-        className="section-title"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        Exposición fotográfica
-      </motion.h2>
-      
-      <div className="section-content">
-        <motion.p 
-          className="text-center max-w-3xl mx-auto mb-16 text-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          En esta sección se presentarán las fotografías y textos elaborados durante el proceso 
-          de fotovoz, resultado del trabajo reflexivo y creativo de las/os participantes. 
-          A través de estas imágenes y relatos, buscamos visibilizar las miradas, experiencias 
-          y mensajes de la comunidad.
-        </motion.p>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((num) => (
-            <motion.div 
-              key={num}
-              className="aspect-square bg-gray-200 rounded-lg overflow-hidden group relative"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: num * 0.1 }}
-              whileHover={{ scale: 1.05, zIndex: 10 }}
-            >
-              <img 
-                src={`https://images.unsplash.com/photo-${1500000000000 + num * 1000000}?q=80&w=400&auto=format&fit=crop`}
-                alt={`Fotografía ${num}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--azul-principal))] to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300 flex items-end justify-center p-4"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 0.8 }}
-              >
-                <div className="text-white text-center">
-                  <Image size={24} className="mx-auto mb-2" />
-                  <p className="text-sm font-semibold">Ver historia</p>
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
+    <motion.section
+      id="exposicion"
+      className="py-20 bg-muted/20"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportSettings}
+      variants={fadeIn()}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div className="text-center mb-12" variants={staggerChildren(0.12)}>
+          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+            Exposición <span className="text-primary">fotográfica</span>
+          </motion.h2>
+          <motion.p className="text-lg text-muted-foreground max-w-3xl mx-auto" variants={fadeInUp(0.2)}>
+            En esta sección se presentarán las fotografías y textos elaborados durante el proceso de fotovoz, resultado del trabajo
+            reflexivo y creativo de las/os participantes. A través de estas imágenes y relatos, buscamos visibilizar las miradas,
+            experiencias y mensajes de la comunidad.
+          </motion.p>
+        </motion.div>
+
+        <motion.div variants={fadeInUp(0.2)}>
+          <Carousel slides={slides} />
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
