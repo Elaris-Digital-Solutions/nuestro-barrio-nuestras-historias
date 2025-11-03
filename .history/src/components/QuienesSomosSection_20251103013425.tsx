@@ -16,16 +16,16 @@ const SECTIONS = [
   },
   {
     id: "quienes-somos-2",
-    title: "¿Cuál es nuestra",
-    highlight: "Misión?",
+    title: "¿Quiénes",
+    highlight: "somos?",
     description: [
       "Este proyecto forma parte de una tesis de maestría en Psicología Comunitaria de la Pontificia Universidad Católica del Perú (PUCP), en alianza con el Centro de Investigación para la Rehabilitación Ambiental y Minería Responsable (CICLOMIN), un programa de la Universidad Peruana Cayetano Heredia (UPCH).",
     ],
   },
   {
     id: "quienes-somos-3",
-    title: "¿Cuál es nuestra",
-    highlight: "Visión?",
+    title: "¿Quiénes",
+    highlight: "somos?",
     description: [
       "Buscamos escuchar y visibilizar las voces locales, especialmente de niños, niñas y adolescentes, a través de metodologías participativas como la fotovoz, el teatro comunitario, la cartografía social y los mapas del cuerpo.\n\nCreemos que la memoria no es una suma de recuerdos individuales, sino el producto de una reflexión colectiva e intergeneracional donde el arte y el diálogo se convierten en herramientas para desarrollar la historia viva de La Oroya.",
     ],
