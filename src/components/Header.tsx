@@ -2,49 +2,20 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useLocation } from "react-router-dom";
 const logo = "/assets/logo.png";
 import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const navigation = [
-    { name: "Nosotros", href: "#quienes-somos", route: "/#quienes-somos" },
-    { name: "Proyecto", href: "#conoce-el-proyecto", route: "/#conoce-el-proyecto" },
-    { name: "Historias", href: "#historias", route: "/historias" },
-    { name: "Fotografías", href: "#exposicion", route: "/#exposicion" },
-    { name: "Aliados", href: "#aliados", route: "/#aliados" },
-    { name: "Equipo", href: "#equipo", route: "/#equipo" },
+    { name: "¿Quiénes somos?", href: "#quienes-somos" },
+    { name: "Historias", href: "#historias" },
+    { name: "Fotografías", href: "#exposicion" },
+    { name: "Aliados", href: "#aliados" },
+    { name: "Equipo", href: "#equipo" },
+    { name: "Proyecto", href: "#conoce-el-proyecto" },
   ];
-
-  const handleNavigation = (item: typeof navigation[0]) => {
-    setIsMenuOpen(false);
-    
-    // Si estamos en la página principal y es un anchor link, usar scroll
-    if (location.pathname === "/" && item.href.startsWith("#")) {
-      const element = document.querySelector(item.href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      // Si es la página de historias o necesitamos navegar
-      if (item.name === "Historias") {
-        navigate("/historias");
-      } else {
-        navigate("/");
-        // Después de navegar a home, hacer scroll al elemento
-        setTimeout(() => {
-          const element = document.querySelector(item.href);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 100);
-      }
-    }
-  };
 
   const navItemMotion: Variants = {
     hidden: { opacity: 0, y: 12 },
@@ -63,21 +34,17 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="flex items-center justify-between h-16 sm:h-20"
+          className="flex items-center justify-between h-20"
           variants={fadeIn()}
           initial="hidden"
           animate="visible"
         >
           {/* Logo */}
-          <motion.div 
-            className="flex items-center gap-2 sm:gap-3 cursor-pointer" 
-            variants={fadeInUp(0.05)}
-            onClick={() => navigate("/")}
-          >
+          <motion.div className="flex items-center gap-3" variants={fadeInUp(0.05)}>
             <motion.img
               src={logo}
               alt="Nuestro Barrio, Nuestra Historia"
-              className="h-10 sm:h-14 w-auto"
+              className="h-14 w-auto"
               whileHover={{ rotate: -4 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
             />
@@ -90,28 +57,46 @@ const Header = () => {
             initial="hidden"
             animate="visible"
           >
-            {navigation.map((item) => (
-              <motion.button
-                key={item.name}
-                onClick={() => handleNavigation(item)}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium cursor-pointer"
-                variants={navItemMotion}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                {item.name}
-              </motion.button>
-            ))}
-            <motion.div variants={fadeInUp(0.2)}>
-              <Button variant="hero" size="lg">
-                Únete
-              </Button>
-            </motion.div>
+            {navigation.map((item) => {
+              const isProyecto = item.name === "Proyecto";
+
+              if (isProyecto) {
+                return (
+                  <motion.div
+                    key={item.name}
+                    variants={navItemMotion}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <Button
+                      asChild
+                      className="bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full shadow-md hover:bg-primary/90 transition-colors"
+                    >
+                      <a href={item.href}>{item.name}</a>
+                    </Button>
+                  </motion.div>
+                );
+              }
+
+              return (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-200 font-semibold"
+                  variants={navItemMotion}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  {item.name}
+                </motion.a>
+              );
+            })}
+            
           </motion.div>
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-3 rounded-lg hover:bg-muted transition-colors touch-manipulation"
+            className="md:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label="Alternar menú"
             whileTap={{ scale: 0.9 }}
@@ -124,33 +109,48 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden py-6 space-y-2 border-t border-border bg-background/95 backdrop-blur-sm"
+              className="md:hidden py-4 space-y-3 border-t border-border"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               {navigation.map((item, index) => (
-                <motion.button
+                <motion.div
                   key={item.name}
-                  onClick={() => handleNavigation(item)}
-                  className="block w-full text-left px-6 py-4 text-foreground hover:bg-muted rounded-lg transition-colors touch-manipulation text-lg font-medium"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 * index }}
                 >
-                  {item.name}
-                </motion.button>
+                  {item.name === "Proyecto" ? (
+                    <Button
+                      asChild
+                      className="w-full bg-primary text-primary-foreground font-semibold rounded-full shadow-md hover:bg-primary/90 transition-colors"
+                    >
+                      <a href={item.href} onClick={() => setIsMenuOpen(false)}>
+                        {item.name}
+                      </a>
+                    </Button>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors font-semibold"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  )}
+                </motion.div>
               ))}
               <motion.div
-                className="px-6 pt-4"
+                className="px-4 pt-2"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.25, ease: "easeOut", delay: 0.2 }}
               >
-                <Button variant="hero" size="lg" className="w-full h-12 text-base touch-manipulation">
+                <Button variant="hero" size="lg" className="w-full">
                   Únete
                 </Button>
               </motion.div>

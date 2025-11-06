@@ -25,9 +25,9 @@ const Hero = () => {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.h1
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 leading-tight"
+          className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }}
         >
@@ -36,21 +36,21 @@ const Hero = () => {
           <span className="text-primary">Nuestra Historia</span>
         </motion.h1>
         <motion.p
-          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed"
+          className="text-xl sm:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
         >
-          Queremos reconstruir la memoria viva de La Oroya a través de las voces, los ojos y las experiencias de sus propios habitantes.
+          Queremos reconstruir la memoria viva de La Oroya a través de las voces, ojos y experiencias de sus propios habitantes.
         </motion.p>
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
         >
-          <Button variant="hero" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto touch-manipulation">
+          <Button variant="hero" size="lg" className="text-lg px-8 py-6">
             Conoce Más
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto touch-manipulation">
+          <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
             <a href="#historias">Ver Historias</a>
           </Button>
         </motion.div>

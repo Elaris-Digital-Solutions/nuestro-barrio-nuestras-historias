@@ -1,7 +1,25 @@
 import { motion } from "framer-motion";
+import ImageCarousel from "@/components/ImageCarousel";
 import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const danielaPortrait = "/assets/danielabussalleu.jpg";
+const maribelPortrait = "/assets/maribel-goncalves.jpg";
+const bramRaulPortrait = encodeURI("/assets/Bram-Leo-Willems&Dr.Raúl-Loayza.webp");
+
+const teamSlides = [
+  {
+    image: danielaPortrait,
+    caption: "Daniela Bussalleu Salcedo",
+  },
+  {
+    image: maribelPortrait,
+    caption: "Dra. Maribel Goncálves",
+  },
+  {
+    image: bramRaulPortrait,
+    caption: "Dr. Bram Leo Willems y Dr. Raúl Loayza",
+  },
+];
 
 const NuestroEquipo = () => {
   return (
@@ -31,11 +49,9 @@ const NuestroEquipo = () => {
           </motion.div>
 
           <motion.div className="flex justify-center" variants={scaleIn(0.2)}>
-            <motion.img
-              src={danielaPortrait}
-              alt="Daniela Bussalleu Salcedo"
-              className="w-full max-w-sm h-[22rem] md:h-[24rem] object-cover rounded-3xl shadow-[var(--shadow-soft)]"
-              loading="lazy"
+            <ImageCarousel
+              slides={teamSlides}
+              className="w-full max-w-sm h-[22rem] md:h-[24rem] rounded-3xl overflow-hidden shadow-[var(--shadow-soft)]"
             />
           </motion.div>
         </motion.div>
