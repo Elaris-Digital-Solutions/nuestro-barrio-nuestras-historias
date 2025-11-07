@@ -66,7 +66,7 @@ const Header = () => {
               <motion.img
                 src={logo}
                 alt="Nuestro Barrio, Nuestra Historia"
-                className="h-14 w-auto"
+                className="h-36 w-auto"
                 whileHover={{ rotate: -4 }}
                 transition={{ type: "spring", stiffness: 260, damping: 18 }}
               />
