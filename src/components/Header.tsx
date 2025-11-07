@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,8 @@ import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigation = [
     { name: "¿Quiénes somos?", href: "#quienes-somos" },
@@ -26,6 +29,18 @@ const Header = () => {
     },
   };
 
+  const handleLogoClick = () => {
+    setIsMenuOpen(false);
+
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    navigate("/");
+    requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
+  };
+
   return (
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border"
@@ -41,13 +56,21 @@ const Header = () => {
         >
           {/* Logo */}
           <motion.div className="flex items-center gap-3" variants={fadeInUp(0.05)}>
-            <motion.img
-              src={logo}
-              alt="Nuestro Barrio, Nuestra Historia"
-              className="h-14 w-auto"
-              whileHover={{ rotate: -4 }}
-              transition={{ type: "spring", stiffness: 260, damping: 18 }}
-            />
+            <motion.button
+              type="button"
+              onClick={handleLogoClick}
+              className="flex items-center focus:outline-none"
+              aria-label="Ir al inicio"
+              whileTap={{ scale: 0.96 }}
+            >
+              <motion.img
+                src={logo}
+                alt="Nuestro Barrio, Nuestra Historia"
+                className="h-14 w-auto"
+                whileHover={{ rotate: -4 }}
+                transition={{ type: "spring", stiffness: 260, damping: 18 }}
+              />
+            </motion.button>
           </motion.div>
 
           {/* Desktop Navigation */}
