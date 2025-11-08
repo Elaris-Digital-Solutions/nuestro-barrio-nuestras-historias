@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-const logo = "/assets/logo.png";
 import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
+
+const logoMobile = "/assets/logo.png";
+const logoDesktop = "/assets/logo-web.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,17 +84,20 @@ const Header = () => {
             <motion.button
               type="button"
               onClick={handleLogoClick}
-              className="flex items-center focus:outline-none"
+              className="flex items-center focus:outline-none md:-ml-2 lg:-ml-4"
               aria-label="Ir al inicio"
               whileTap={{ scale: 0.96 }}
+              whileHover={{ rotate: -4 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18 }}
             >
-              <motion.img
-                src={logo}
-                alt="Nuestro Barrio, Nuestra Historia"
-                className="h-36 w-auto"
-                whileHover={{ rotate: -4 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
-              />
+              <picture>
+                <source srcSet={logoDesktop} media="(min-width: 1024px)" />
+                <img
+                  src={logoMobile}
+                  alt="Nuestro Barrio, Nuestra Historia"
+                  className="h-36 w-auto md:h-20 lg:h-16"
+                />
+              </picture>
             </motion.button>
           </motion.div>
 
