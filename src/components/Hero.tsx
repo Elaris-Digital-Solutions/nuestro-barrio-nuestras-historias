@@ -4,25 +4,6 @@ import { motion } from "framer-motion";
 const heroVideo = "/assets/video-hero.mov";
 
 const Hero = () => {
-  const smoothScrollTo = (targetPosition: number, duration = 1300) => {
-    const start = window.pageYOffset;
-    const distance = targetPosition - start;
-    let startTime: number | null = null;
-
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    const step = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      window.scrollTo({ top: start + distance * easeInOutCubic(progress) });
-      if (elapsed < duration) requestAnimationFrame(step);
-    };
-
-    requestAnimationFrame(step);
-  };
-
   const handleScrollTo = (selector: string) => {
     const element = document.querySelector(selector);
     if (!element) return;
@@ -31,7 +12,7 @@ const Hero = () => {
     const elementTop = (element as HTMLElement).getBoundingClientRect().top + window.pageYOffset;
     const targetPosition = Math.max(elementTop - headerOffset, 0);
 
-    smoothScrollTo(targetPosition, 1400);
+    window.scrollTo({ top: targetPosition, behavior: "smooth" });
   };
 
   return (

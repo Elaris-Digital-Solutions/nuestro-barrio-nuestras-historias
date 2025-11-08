@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
@@ -18,6 +19,8 @@ const Header = () => {
   const [isDesktop, setIsDesktop] = useState(getIsDesktop);
   const [hasSwappedToCorrected, setHasSwappedToCorrected] = useState(false);
   const [isCorrectedReady, setIsCorrectedReady] = useState(false);
+  const pendingScrollTimeout = useRef<number | null>(null);
+  const logoFinishTimeout = useRef<number | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -80,30 +83,26 @@ const Header = () => {
       return;
     }
 
-    let startTimer: number | undefined;
-    let finishTimer: number | undefined;
-
     setLogoPhase("initial");
 
-    if (isDesktop) {
-      startTimer = window.setTimeout(() => {
-        setLogoPhase("animating");
-        finishTimer = window.setTimeout(() => {
-          setLogoPhase("final");
-        }, 1800);
-      }, 60);
-    } else {
-      startTimer = window.setTimeout(() => {
-        setLogoPhase("animating");
-        finishTimer = window.setTimeout(() => {
-          setLogoPhase("final");
-        }, 1500);
-      }, 10000);
+    if (logoFinishTimeout.current) {
+      window.clearTimeout(logoFinishTimeout.current);
+      logoFinishTimeout.current = null;
     }
 
+    const startTimer = window.setTimeout(() => {
+      setLogoPhase("animating");
+      logoFinishTimeout.current = window.setTimeout(() => {
+        setLogoPhase("final");
+      }, isDesktop ? 1800 : 1500);
+    }, isDesktop ? 60 : 10000);
+
     return () => {
-      if (startTimer) window.clearTimeout(startTimer);
-      if (finishTimer) window.clearTimeout(finishTimer);
+      window.clearTimeout(startTimer);
+      if (logoFinishTimeout.current) {
+        window.clearTimeout(logoFinishTimeout.current);
+        logoFinishTimeout.current = null;
+      }
     };
   }, [isDesktop, hasSwappedToCorrected]);
 
@@ -120,6 +119,83 @@ const Header = () => {
     { name: "Nuestro Equipo", href: "#equipo" },
     { name: "Exposición Fotográfica", href: "#exposicion" },
   ];
+
+  useEffect(() => {
+    return () => {
+      if (pendingScrollTimeout.current) {
+        window.clearTimeout(pendingScrollTimeout.current);
+        pendingScrollTimeout.current = null;
+      }
+    };
+  }, []);
+
+  const updateUrlHash = (hash: string) => {
+    const { pathname, search } = window.location;
+    const newHash = hash ? hash : "";
+    window.history.replaceState(null, "", `${pathname}${search}${newHash}`);
+  };
+
+  const scrollToHash = (hash: string): boolean => {
+    const elementId = hash.replace("#", "");
+    if (!elementId) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      updateUrlHash("");
+      return true;
+    }
+
+    const target = document.getElementById(elementId);
+    if (!target) {
+      return false;
+    }
+
+    const headerOffset = 88;
+    const rect = target.getBoundingClientRect();
+    const offsetTop = rect.top + window.scrollY - headerOffset;
+
+    window.scrollTo({ top: Math.max(offsetTop, 0), behavior: "smooth" });
+    updateUrlHash(hash);
+    return true;
+  };
+
+  const scheduleScrollAttempt = (hash: string, delay = 150, attempt = 1) => {
+    if (pendingScrollTimeout.current) {
+      window.clearTimeout(pendingScrollTimeout.current);
+    }
+
+    pendingScrollTimeout.current = window.setTimeout(() => {
+      const success = scrollToHash(hash);
+      if (!success && attempt < 5) {
+        scheduleScrollAttempt(hash, 150, attempt + 1);
+        return;
+      }
+
+      pendingScrollTimeout.current = null;
+    }, delay);
+  };
+
+  const handleNavigation = (hash: string) => {
+    setIsMenuOpen(false);
+    
+    if (location.pathname !== "/") {
+      navigate("/");
+      scheduleScrollAttempt(hash, 250);
+      return;
+    }
+
+    // Execute scroll immediately
+    setTimeout(() => {
+      const didScroll = scrollToHash(hash);
+      if (!didScroll) {
+        scheduleScrollAttempt(hash, 100);
+      }
+    }, 50);
+  };
+
+  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, hash: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleNavigation(hash);
+  };
 
   const navItemMotion: Variants = {
     hidden: { opacity: 0, y: 12 },
@@ -245,7 +321,9 @@ const Header = () => {
                       asChild
                       className="bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full shadow-md hover:bg-primary/90 transition-colors"
                     >
-                      <a href={item.href}>{item.name}</a>
+                      <a href={item.href} onClick={(event) => handleAnchorClick(event, item.href)}>
+                        {item.name}
+                      </a>
                     </Button>
                   </motion.div>
                 );
@@ -259,6 +337,7 @@ const Header = () => {
                   variants={navItemMotion}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
+                  onClick={(event) => handleAnchorClick(event, item.href)}
                 >
                   {item.name}
                 </motion.a>
@@ -305,7 +384,7 @@ const Header = () => {
                       asChild
                       className="w-full bg-primary text-primary-foreground font-semibold rounded-full shadow-md hover:bg-primary/90 transition-colors"
                     >
-                      <a href={item.href} onClick={() => setIsMenuOpen(false)}>
+                      <a href={item.href} onClick={(event) => handleAnchorClick(event, item.href)}>
                         {item.name}
                       </a>
                     </Button>
@@ -313,7 +392,7 @@ const Header = () => {
                     <a
                       href={item.href}
                       className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors font-semibold"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={(event) => handleAnchorClick(event, item.href)}
                     >
                       {item.name}
                     </a>
