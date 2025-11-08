@@ -49,7 +49,7 @@ const IncidenciaSection = () => {
               className="rounded-3xl border border-border bg-background shadow-[0_15px_45px_-20px_rgba(20,20,20,0.2)] p-8 flex flex-col gap-5"
               variants={fadeInUp(0.12 + index * 0.06)}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <div className="inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <pillar.icon className="h-7 w-7" />
                 </div>

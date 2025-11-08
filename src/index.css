@@ -202,3 +202,16 @@ All colors MUST be HSL.
     padding: 0.5rem 0.75rem;
   }
 }
+
+.story-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.story-excerpt::after {
+  content: "";
+}
