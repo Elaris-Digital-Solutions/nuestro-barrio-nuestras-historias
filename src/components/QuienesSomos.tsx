@@ -22,7 +22,7 @@ const QuienesSomos = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="mb-6 text-lg leading-relaxed">
+            <p className="mb-6 text-lg leading-relaxed" text-justify>
               <strong><em>“Nuestro Barrio, Nuestra Historia”</em></strong> es un proyecto interdisciplinario que desarrolla <strong>soluciones metodológicas creativas y comunitarias</strong> para aportar a un <strong><em>urban planning</em></strong> <strong>sostenible</strong> en ciudades afectadas por <strong>contaminación ambiental</strong>. Creemos que los <strong>niños, niñas y adolescentes (NNA)</strong> poseen una <strong>mirada única del territorio</strong>, por lo que <strong>su voz es el eje y motor</strong> de nuestros procesos.
             </p>
             <p className="mb-6 text-lg leading-relaxed">

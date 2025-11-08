@@ -40,7 +40,7 @@ const QuienesSomosSection = () => {
               ¿Quiénes <span className="text-primary">Somos?</span>
             </motion.h2>
             <motion.p
-              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
+              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line text-justify"
               variants={fadeInUp(0.2)}
             >
               <>
@@ -48,13 +48,13 @@ const QuienesSomosSection = () => {
               </>
             </motion.p>
             <motion.p
-              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
+              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line text-justify"
               variants={fadeInUp(0.3)}
             >
               Trabajamos desde un enfoque de <strong>memoria</strong>, <strong>ciudadanía ambiental</strong> y <strong>participación intergeneracional</strong>. Aunque los NNA son protagonistas, la presencia de <strong>familias</strong> y <strong>personas adultas de la comunidad</strong> complementa y fortalece la <strong>construcción colectiva de significados</strong>, ampliando la comprensión del <strong>entorno urbano</strong>.
             </motion.p>
             <motion.p
-              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
+              className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line text-justify"
               variants={fadeInUp(0.4)}
             >
               Nuestro propósito es generar <strong>espacios</strong> donde la comunidad pueda <strong>narrar su historia</strong>, <strong>reconocer sus vínculos con el territorio</strong> y <strong>proponer caminos</strong> para un <strong>futuro más habitable</strong>. Buscamos que estas <strong>memorias</strong> dialoguen con <strong>instituciones y actores locales</strong>, contribuyendo a decisiones que promuevan <strong>ciudades más saludables, funcionales y humanas</strong>.
