@@ -13,8 +13,17 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeroInView, setIsHeroInView] = useState(true);
   const [logoPhase, setLogoPhase] = useState<"initial" | "animating" | "final">("initial");
+  const getIsDesktop = () =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
+  const [isDesktop, setIsDesktop] = useState(getIsDesktop);
+  const [hasSwappedToCorrected, setHasSwappedToCorrected] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const preloadImage = new Image();
+    preloadImage.src = logoCorrected;
+  }, []);
 
   useEffect(() => {
     const heroElement = document.getElementById("inicio");
@@ -36,15 +45,57 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLogoPhase("animating"), 5000);
-    return () => window.clearTimeout(timer);
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const updateIsDesktop = () => setIsDesktop(mediaQuery.matches);
+
+    updateIsDesktop();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateIsDesktop);
+      return () => mediaQuery.removeEventListener("change", updateIsDesktop);
+    }
+
+    mediaQuery.addListener(updateIsDesktop);
+    return () => mediaQuery.removeListener(updateIsDesktop);
   }, []);
 
   useEffect(() => {
-    if (logoPhase !== "animating") return;
-    const swapTimer = window.setTimeout(() => setLogoPhase("final"), 1500);
-    return () => window.clearTimeout(swapTimer);
-  }, [logoPhase]);
+    if (typeof window === "undefined") return;
+
+    if (hasSwappedToCorrected) {
+      setLogoPhase("final");
+      return;
+    }
+
+    let startTimer: number | undefined;
+    let finishTimer: number | undefined;
+
+    setLogoPhase("initial");
+
+    if (isDesktop) {
+      startTimer = window.setTimeout(() => {
+        setLogoPhase("animating");
+        finishTimer = window.setTimeout(() => {
+          setLogoPhase("final");
+        }, 1800);
+      }, 60);
+    } else {
+      startTimer = window.setTimeout(() => {
+        setLogoPhase("animating");
+        finishTimer = window.setTimeout(() => {
+          setLogoPhase("final");
+          setHasSwappedToCorrected(true);
+        }, 1500);
+      }, 5000);
+    }
+
+    return () => {
+      if (startTimer) window.clearTimeout(startTimer);
+      if (finishTimer) window.clearTimeout(finishTimer);
+    };
+  }, [isDesktop, hasSwappedToCorrected]);
 
   const navigation = [
     { name: "¿Quiénes Somos?", href: "#quienes-somos" },
@@ -62,6 +113,24 @@ const Header = () => {
       transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
     },
   };
+
+  const showCorrectedLogo = hasSwappedToCorrected && logoPhase === "final";
+  const animatedLogoWidth = isDesktop ? "min(24vw, 380px)" : "min(70vw, 300px)";
+  const correctedLogoWidth = isDesktop ? "min(24vw, 380px)" : "min(58vw, 260px)";
+  const clipInitial = isDesktop ? "inset(0% 100% 0% 0%)" : "inset(0% 0% 0% 0%)";
+  const clipTarget = (() => {
+    if (isDesktop) {
+      return logoPhase === "initial" ? "inset(0% 100% 0% 0%)" : "inset(0% 0% 0% 0%)";
+    }
+    if (logoPhase === "animating") {
+      return "inset(0% 42% 0% 0%)";
+    }
+    return "inset(0% 0% 0% 0%)";
+  })();
+  const clipTransition = {
+    duration: isDesktop ? 1.8 : 1.2,
+    ease: [0.42, 0, 0.58, 1],
+  } as const;
 
   const handleLogoClick = () => {
     setIsMenuOpen(false);
@@ -104,30 +173,25 @@ const Header = () => {
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
             >
               <AnimatePresence mode="wait" initial={false}>
-                {logoPhase === "final" ? (
+                {showCorrectedLogo ? (
                   <motion.img
-                    key="logo-final"
+                    key="logo-corrected"
                     src={logoCorrected}
                     alt="Nuestro Barrio, Nuestra Historia"
                     className="w-full h-auto"
-                    style={{ width: "min(58vw, 320px)" }}
+                    style={{ width: correctedLogoWidth }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                   />
                 ) : (
                   <motion.div
-                    key="logo-initial"
+                    key={`logo-animated-${isDesktop ? "desktop" : "mobile"}`}
                     className="relative overflow-hidden"
-                    initial={false}
-                    animate={{
-                      clipPath:
-                        logoPhase === "animating"
-                          ? "inset(0% 42% 0% 0%)"
-                          : "inset(0% 0% 0% 0%)",
-                    }}
-                    style={{ width: "min(58vw, 320px)" }}
-                    transition={{ duration: 1.2, ease: [0.42, 0, 0.58, 1] }}
+                    style={{ width: animatedLogoWidth }}
+                    initial={{ clipPath: clipInitial }}
+                    animate={{ clipPath: clipTarget }}
+                    transition={clipTransition}
                   >
                     <picture>
                       <source srcSet={logoDesktop} media="(min-width: 1024px)" />
