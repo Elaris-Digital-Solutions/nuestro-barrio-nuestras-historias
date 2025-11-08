@@ -4,9 +4,10 @@ import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/
 const ALLIES = [
   { name: "Activos Mineros S.A.C. (AMSAC)", logo: "🏭" },
   { name: "Municipalidad Distrital de Santa Rosa de Sacco", logo: "🌹" },
-  { name: "Municipalidad Provincial de Yauli – La Oroya", logo: "⛰️" },
+  { name: "Municipalidad Provincial de Yauli", logo: "⛰️" },
   { name: "Iglesia evangélica de Santa Rosa de Sacco", logo: "⛪" },
   { name: "Institución Educativa José Carlos Mariátegui", logo: "🎓" },
+  { name: "Unidad de Gestión Educativa Local (UGEL)", logo: "🏫" },
 ];
 
 const AliadosQueSuman = () => {
@@ -29,11 +30,11 @@ const AliadosQueSuman = () => {
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center" variants={staggerChildren(0.1)}>
+        <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center" variants={staggerChildren(0.1)}>
           {ALLIES.map((ally) => (
             <motion.div
               key={ally.name}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-muted/50 transition-all duration-300 group"
+              className="flex flex-col items-center justify-center p-5 sm:p-6 rounded-xl bg-muted/50 transition-all duration-300 group"
               variants={scaleIn()}
               whileHover={{ y: -6, scale: 1.02 }}
             >
