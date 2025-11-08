@@ -92,7 +92,6 @@ const Stories = () => {
                     transition={{ duration: 0.4 }}
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
                 <CardContent className="flex flex-1 flex-col space-y-3 p-4 sm:p-6">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
