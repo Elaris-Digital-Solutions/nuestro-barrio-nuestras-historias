@@ -7,15 +7,21 @@ const pillars = [
     id: "incidencia-politica",
     icon: Building2,
     title: "¿Cómo generamos incidencia política?",
-    description:
-      "Todo el proceso de trabajo metodológico culmina con exposiciones artísticas desarrolladas en espacios públicos elegidos por el grupo participante, con fotografías, textos y relatos; acompañadas de conversatorios con autoridades y especialistas locales. De este modo, anclamos nuestro trabajo en la acción pública, llevando la voz comunitaria a los espacios donde se toman decisiones. Las memorias construidas se convierten en insumos técnicos y humanos para la planificación urbana y la remediación ambiental.",
+    description: (
+      <>
+        Todo el proceso de trabajo metodológico culmina con exposiciones artísticas desarrolladas en espacios públicos elegidos por el grupo participante, con fotografías, textos y relatos; acompañadas de <strong>conversatorios con autoridades y especialistas locales</strong>. De este modo, anclamos nuestro trabajo en la acción pública, <strong>llevando la voz comunitaria a los espacios donde se toman decisiones</strong>. Las memorias construidas se convierten en insumos técnicos y humanos para la planificación urbana y la remediación ambiental.
+      </>
+    ),
   },
   {
     id: "compartimos-proceso",
     icon: Share2,
     title: "¿Cómo compartimos lo que hacemos?",
-    description:
-      "Socializamos todo el proceso mediante exposiciones públicas creadas colectivamente y ubicadas en espacios comunitarios, donde se presentan las mismas fotografías, textos y relatos elaborados durante el proyecto. Estos contenidos se trasladan también a una galería virtual abierta, que amplía su alcance y permite que las historias circulen más allá del territorio. Como complemento, sumamos material digital del proceso co-producido junto a estudiantes de la comunidad capacitados en comunicación digital.",
+    description: (
+      <>
+        Socializamos todo el proceso mediante <strong>exposiciones públicas creadas colectivamente</strong> y <strong>ubicadas en espacios comunitarios</strong>, donde se presentan las mismas fotografías, textos y relatos elaborados durante el proyecto. Estos contenidos se trasladan también a una <strong>galería virtual abierta</strong>, que amplía su alcance y permite que las historias circulen más allá del territorio. Como complemento, sumamos material digital del proceso co-producido junto a <strong>estudiantes de la comunidad capacitados en comunicación digital</strong>.
+      </>
+    ),
   },
 ];
 
