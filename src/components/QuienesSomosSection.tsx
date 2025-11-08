@@ -43,7 +43,7 @@ const QuienesSomosSection = () => {
               className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
               variants={fadeInUp(0.2)}
             >
-              "Nuestro Barrio, Nuestra Historia" es un proyecto interdisciplinario que desarrolla soluciones metodológicas creativas y comunitarias para aportar a un urban planning sostenible en ciudades afectadas por contaminación ambiental. Creemos que los niños, niñas y adolescentes poseen una mirada única del territorio, por lo que su voz es el eje y motor de nuestros procesos.
+              "Nuestro Barrio, Nuestra Historia" es un proyecto interdisciplinario que desarrolla soluciones metodológicas creativas y comunitarias para aportar a un <span className="italic">urban planning</span> sostenible en ciudades afectadas por contaminación ambiental. Creemos que los niños, niñas y adolescentes poseen una mirada única del territorio, por lo que su voz es el eje y motor de nuestros procesos.
             </motion.p>
             <motion.p
               className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
