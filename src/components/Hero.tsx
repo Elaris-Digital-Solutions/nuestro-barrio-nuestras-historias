@@ -4,6 +4,36 @@ import { motion } from "framer-motion";
 const heroVideo = "/assets/video-hero.mov";
 
 const Hero = () => {
+  const smoothScrollTo = (targetPosition: number, duration = 1300) => {
+    const start = window.pageYOffset;
+    const distance = targetPosition - start;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const step = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo({ top: start + distance * easeInOutCubic(progress) });
+      if (elapsed < duration) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const handleScrollTo = (selector: string) => {
+    const element = document.querySelector(selector);
+    if (!element) return;
+
+    const headerOffset = 80;
+    const elementTop = (element as HTMLElement).getBoundingClientRect().top + window.pageYOffset;
+    const targetPosition = Math.max(elementTop - headerOffset, 0);
+
+    smoothScrollTo(targetPosition, 1400);
+  };
+
   return (
     <motion.section
       id="inicio"
@@ -53,20 +83,20 @@ const Hero = () => {
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
         >
           <Button
-            asChild
             variant="hero"
             size="lg"
             className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white"
+            onClick={() => handleScrollTo("#conoce-el-proyecto")}
           >
-            <a href="#conoce-el-proyecto">Conoce el Proyecto</a>
+            Conoce el Proyecto
           </Button>
           <Button
-            asChild
             variant="outline"
             size="lg"
             className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white border-white hover:bg-white hover:text-primary"
+            onClick={() => handleScrollTo("#exposicion")}
           >
-            <a href="#exposicion">Exposición Fotográfica</a>
+            Exposición Fotográfica
           </Button>
         </motion.div>
       </div>

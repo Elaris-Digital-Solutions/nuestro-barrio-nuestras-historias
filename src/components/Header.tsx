@@ -7,10 +7,12 @@ import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
 
 const logoMobile = "/assets/logo.png";
 const logoDesktop = "/assets/logo-web.png";
+const logoCorrected = "/assets/logo-corregido.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeroInView, setIsHeroInView] = useState(true);
+  const [logoPhase, setLogoPhase] = useState<"initial" | "animating" | "final">("initial");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,6 +34,17 @@ const Header = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLogoPhase("animating"), 5000);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (logoPhase !== "animating") return;
+    const swapTimer = window.setTimeout(() => setLogoPhase("final"), 1500);
+    return () => window.clearTimeout(swapTimer);
+  }, [logoPhase]);
 
   const navigation = [
     { name: "¿Quiénes Somos?", href: "#quienes-somos" },
@@ -90,14 +103,43 @@ const Header = () => {
               whileHover={{ rotate: -4 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
             >
-              <picture>
-                <source srcSet={logoDesktop} media="(min-width: 1024px)" />
-                <img
-                  src={logoMobile}
-                  alt="Nuestro Barrio, Nuestra Historia"
-                  className="h-36 w-auto md:h-20 lg:h-16"
-                />
-              </picture>
+              <AnimatePresence mode="wait" initial={false}>
+                {logoPhase === "final" ? (
+                  <motion.img
+                    key="logo-final"
+                    src={logoCorrected}
+                    alt="Nuestro Barrio, Nuestra Historia"
+                    className="w-full h-auto"
+                    style={{ width: "min(58vw, 320px)" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                  />
+                ) : (
+                  <motion.div
+                    key="logo-initial"
+                    className="relative overflow-hidden"
+                    initial={false}
+                    animate={{
+                      clipPath:
+                        logoPhase === "animating"
+                          ? "inset(0% 42% 0% 0%)"
+                          : "inset(0% 0% 0% 0%)",
+                    }}
+                    style={{ width: "min(58vw, 320px)" }}
+                    transition={{ duration: 1.2, ease: [0.42, 0, 0.58, 1] }}
+                  >
+                    <picture>
+                      <source srcSet={logoDesktop} media="(min-width: 1024px)" />
+                      <img
+                        src={logoMobile}
+                        alt="Nuestro Barrio, Nuestra Historia"
+                        className="w-full h-auto"
+                      />
+                    </picture>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.button>
           </motion.div>
 
