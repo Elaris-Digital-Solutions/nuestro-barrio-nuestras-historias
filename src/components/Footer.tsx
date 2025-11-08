@@ -96,7 +96,18 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
-          <p>&copy; {new Date().getFullYear()} Nuestro Barrio, Nuestra Historia. Todos los derechos reservados. Desarrollado por Elaris Digital Solutions</p>
+          <p>
+            &copy; {new Date().getFullYear()} Nuestro Barrio, Nuestra Historia. Todos los derechos reservados. Desarrollado por
+            {" "}
+            <a
+              href="https://www.instagram.com/elarisdigitalsolutions"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-1 decoration-primary-foreground/60 underline-offset-2 hover:decoration-primary-foreground hover:text-primary-foreground"
+            >
+              Elaris Digital Solutions
+            </a>
+          </p>
         </motion.div>
       </div>
     </motion.footer>
