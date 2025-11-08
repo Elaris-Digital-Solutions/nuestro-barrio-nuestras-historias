@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const heroVideo = "/assets/video-hero.mp4";
+const heroPosterWebp = "/assets/video-hero-poster.webp";
+const heroPosterFallback = "/assets/video-hero-poster.jpg";
 
 const Hero = () => {
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
   const handleScrollTo = (selector: string) => {
     const element = document.querySelector(selector);
     if (!element) return;
@@ -27,16 +32,38 @@ const Hero = () => {
       }}
     >
       {/* Background Video with Overlay */}
-      <div className="absolute inset-0 overflow-hidden bg-gray-900">
+      <div
+        className="absolute inset-0 overflow-hidden bg-black will-change-[opacity]"
+        style={{
+          backgroundImage: `url(${heroPosterFallback})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <picture
+          className={`absolute inset-0 transition-opacity duration-500 ${isVideoReady ? "opacity-0" : "opacity-100"}`}
+        >
+          <source srcSet={heroPosterWebp} type="image/webp" />
+          <img
+            src={heroPosterFallback}
+            alt="Previsualización del video de Nuestro Barrio, Nuestra Historia"
+            className="h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
         <video
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           controls={false}
           style={{ pointerEvents: 'none' }}
+          poster={heroPosterFallback}
+          onLoadedData={() => setIsVideoReady(true)}
         >
           <source src={heroVideo} type="video/mp4" />
           {/* Fallback for browsers that don't support video */}
