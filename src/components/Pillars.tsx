@@ -44,8 +44,9 @@ const Pillars = () => {
           <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
             Conoce el <span className="text-primary">Proyecto</span>
           </motion.h2>
-          <motion.p className="text-lg text-muted-foreground max-w-2xl mx-auto" variants={fadeInUp(0.2)}>
-            Trabajamos con jóvenes y familias de La Oroya a través de talleres y actividades creativas que exploran la identidad, el territorio y los sueños para el futuro.
+          <motion.p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-loose" variants={fadeInUp(0.2)}>
+            Nuestro Barrio, Nuestra Historia es una iniciativa que busca rescatar, preservar y compartir historias que hacen únicas a las comunidades. En esta oportunidad
+            trabajamos junto a la comunidad de La Oroya para recuperar la memoria local y producir información valiosa que contribuirá a futuros procesos de planificación urbana.
           </motion.p>
         </motion.div>
 

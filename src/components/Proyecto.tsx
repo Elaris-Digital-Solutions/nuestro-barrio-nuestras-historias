@@ -72,15 +72,16 @@ const Proyecto = () => {
         </motion.h2>
         
         <motion.p 
-          className="mb-12 text-center text-lg max-w-3xl mx-auto"
+          className="mb-12 text-center text-lg max-w-5xl mx-auto leading-loose"
           variants={textAnimation}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
         >
-          Trabajamos con jóvenes y familias de La Oroya a través de talleres y actividades 
-          creativas que exploran la identidad, el territorio y los sueños para el futuro. 
-          Algunas de nuestras metodologías incluyen:
+          Nuestro Barrio, Nuestra Historia es una iniciativa que busca rescatar, preservar y compartir historias
+          que hacen únicas a las comunidades. En esta oportunidad trabajamos junto a la comunidad de La Oroya
+          para recuperar la memoria local y producir información valiosa que contribuirá a futuros procesos de
+          planificación urbana. Algunas de nuestras metodologías incluyen:
         </motion.p>
         
         <motion.div 

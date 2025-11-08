@@ -5,7 +5,7 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { fadeIn, fadeInUp, staggerChildren } from "@/lib/motion";
 
-const logoMobile = "/assets/logo.png";
+const logoMobile = "/assets/logo (2).png";
 const logoDesktop = "/assets/logo-web.png";
 const logoCorrected = "/assets/logo-corregido.png";
 
