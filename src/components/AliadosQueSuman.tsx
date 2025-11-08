@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeInFrom, sectionReveal, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const ALLIES = [
   { name: "Activos Mineros S.A.C. (AMSAC)", logo: "🏭" },
@@ -18,24 +18,39 @@ const AliadosQueSuman = () => {
       initial="hidden"
       whileInView="visible"
       viewport={viewportSettings}
-      variants={fadeIn()}
+  variants={sectionReveal({ delayChildren: 0.05, staggerChildren: 0.08 })}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
-          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+        <motion.div
+          className="text-center mb-16"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.04 })}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
+            variants={fadeInFrom("up", { distance: 18 })}
+          >
             Actores <span className="text-primary">Comunitarios</span>
           </motion.h2>
-          <motion.p className="text-lg text-muted-foreground max-w-2xl mx-auto" variants={fadeInUp(0.2)}>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            variants={fadeInFrom("up", { distance: 16 })}
+          >
             Instituciones aliadas que hacen posible esta iniciativa y acompañan el proceso comunitario en La Oroya.
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center" variants={staggerChildren(0.1)}>
-          {ALLIES.map((ally) => (
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.05 })}
+        >
+          {ALLIES.map((ally, index) => (
             <motion.div
               key={ally.name}
               className="flex flex-col items-center justify-center p-5 sm:p-6 rounded-xl bg-muted/50 transition-all duration-300 group"
-              variants={scaleIn()}
+              variants={fadeInFrom(index % 2 === 0 ? "up" : "down", {
+                duration: 0.5,
+                distance: 16,
+              })}
               whileHover={{ y: -6, scale: 1.02 }}
             >
               <motion.div

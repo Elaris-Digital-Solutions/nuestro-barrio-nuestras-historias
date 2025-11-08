@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeInFrom, sectionReveal, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const PILLARS = [
   {
@@ -43,43 +43,53 @@ const ConoceElProyecto = () => {
       initial="hidden"
       whileInView="visible"
       viewport={viewportSettings}
-      variants={fadeIn()}
+  variants={sectionReveal({ delayChildren: 0.05, staggerChildren: 0.08 })}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
-          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+        <motion.div
+          className="text-center mb-16"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.04 })}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
+            variants={fadeInFrom("up", { distance: 18 })}
+          >
             Conoce el <span className="text-primary">Proyecto</span>
           </motion.h2>
-          <motion.p className="text-lg text-muted-foreground max-w-6xl mx-auto leading-loose tracking-wide" variants={fadeInUp(0.2)}>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-6xl mx-auto leading-loose tracking-wide"
+            variants={fadeInFrom("up", { distance: 16 })}
+          >
             <strong>Nuestro Barrio, Nuestra Historia</strong> es una iniciativa que a través de <strong>metodologías comunitarias</strong> busca <strong>rescatar, preservar y compartir historias</strong> que hacen únicas a
             las comunidades. En esta oportunidad trabajamos junto a la <strong>comunidad de La Oroya</strong> para recuperar la <strong>memoria local</strong> y producir
             <strong> conocimiento</strong> que contribuirá a futuros <strong>procesos de planificación urbana</strong>.
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6" variants={staggerChildren(0.1)}>
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.05 })}
+        >
           {PILLARS.map((pillar, index) => (
-            <motion.div key={pillar.title} variants={scaleIn(index * 0.05)}>
+            <motion.article
+              key={pillar.title}
+              variants={fadeInFrom(index % 2 === 0 ? "up" : "down", {
+                duration: 0.5,
+                distance: 18,
+              })}
+            >
               <Card className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 border-2 h-full">
                 <CardContent className="p-6 space-y-4 text-center h-full flex flex-col justify-between">
-                  <motion.div
-                    className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.12, rotate: 3 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                  >
+                  <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center text-3xl transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
                     <span role="img" aria-label={pillar.title}>
                       {pillar.icon}
                     </span>
-                  </motion.div>
-                  <motion.h3 className="text-xl font-semibold text-foreground" variants={fadeInUp(0.1)}>
-                    {pillar.title}
-                  </motion.h3>
-                  <motion.p className="text-muted-foreground text-sm leading-relaxed" variants={fadeInUp(0.15)}>
-                    {pillar.description}
-                  </motion.p>
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">{pillar.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{pillar.description}</p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
       </div>

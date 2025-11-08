@@ -158,7 +158,7 @@ const Stories = () => {
           {filteredStories.length > 0 ? (
             <motion.div 
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              variants={staggerChildren(0.15, 0.1)}
+              variants={staggerChildren(0.08, 0.04)}
             >
               {filteredStories.map((story) => (
                 <motion.div key={story.id} variants={fadeInUp()}>

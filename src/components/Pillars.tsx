@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeIn, fadeInFrom, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const pillars = [
   {
@@ -40,17 +40,17 @@ const Pillars = () => {
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={staggerChildren(0.15)}>
-          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+        <motion.div className="text-center mb-16" variants={staggerChildren(0.08)}>
+          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInFrom("up", { distance: 18 })}>
             Conoce el <span className="text-primary">Proyecto</span>
           </motion.h2>
-          <motion.p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-loose" variants={fadeInUp(0.2)}>
+          <motion.p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-loose" variants={fadeInFrom("up", { distance: 16 })}>
             Nuestro Barrio, Nuestra Historia es una iniciativa que busca rescatar, preservar y compartir historias que hacen únicas a las comunidades. En esta oportunidad
             trabajamos junto a la comunidad de La Oroya para recuperar la memoria local y producir información valiosa que contribuirá a futuros procesos de planificación urbana.
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6" variants={staggerChildren(0.1)}>
+        <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6" variants={staggerChildren(0.08)}>
           {pillars.map((pillar, index) => (
             <motion.div key={pillar.title} variants={scaleIn(index * 0.05)}>
               <Card className="group hover:shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-2 border-2 h-full">
@@ -62,10 +62,10 @@ const Pillars = () => {
                   >
                     <span role="img" aria-label={pillar.title}>{pillar.icon}</span>
                   </motion.div>
-                  <motion.h3 className="text-xl font-semibold text-foreground" variants={fadeInUp(0.1)}>
+                  <motion.h3 className="text-xl font-semibold text-foreground" variants={fadeInFrom("up", { distance: 14 })}>
                     {pillar.title}
                   </motion.h3>
-                  <motion.p className="text-muted-foreground text-sm leading-relaxed" variants={fadeInUp(0.15)}>
+                  <motion.p className="text-muted-foreground text-sm leading-relaxed" variants={fadeInFrom("up", { distance: 12 })}>
                     {pillar.description}
                   </motion.p>
                 </CardContent>
@@ -76,7 +76,7 @@ const Pillars = () => {
 
         <motion.p
           className="text-lg text-muted-foreground max-w-3xl mx-auto mt-12 text-center"
-          variants={fadeInUp(0.25)}
+          variants={fadeInFrom("up", { distance: 16, delay: 0.04 })}
         >
           Todo el proceso culminará en una exposición pública y artística, con fotografías, textos y relatos elaborados por las/os participantes, acompañada de conversatorios con autoridades locales y especialistas para promover la incidencia política y la escucha institucional.
         </motion.p>

@@ -305,7 +305,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           <motion.div
             className="hidden md:flex items-center gap-8"
-            variants={staggerChildren(0.1, 0.2)}
+            variants={staggerChildren(0.08, 0.04)}
             initial="hidden"
             animate="visible"
           >

@@ -3,7 +3,7 @@ import { Calendar } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeInFrom, sectionReveal, staggerChildren, viewportSettings } from "@/lib/motion";
 import { useNavigate } from "react-router-dom";
 
 type Story = {
@@ -67,21 +67,39 @@ const Stories = () => {
       initial="hidden"
       whileInView="visible"
       viewport={viewportSettings}
-      variants={fadeIn()}
+  variants={sectionReveal({ delayChildren: 0.05, staggerChildren: 0.08 })}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-12 sm:mb-16" variants={staggerChildren(0.15)}>
-          <motion.h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
-           Nuestras<span className="text-primary"> Historias</span>
+        <motion.div
+          className="text-center mb-12 sm:mb-16"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.04 })}
+        >
+          <motion.h2
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
+            variants={fadeInFrom("up", { distance: 18 })}
+          >
+            Nuestras<span className="text-primary"> Historias</span>
           </motion.h2>
-          <motion.p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4" variants={fadeInUp(0.2)}>
+          <motion.p
+            className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4"
+            variants={fadeInFrom("up", { distance: 16 })}
+          >
             Descubre las historias que dan vida a nuestro barrio
           </motion.p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12" variants={staggerChildren(0.12, 0.1)}>
-          {stories.map((story) => (
-            <motion.div key={story.title} variants={fadeInUp()}>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.05 })}
+        >
+          {stories.map((story, index) => (
+            <motion.article
+              key={story.title}
+              variants={fadeInFrom(index % 2 === 0 ? "up" : "down", {
+                duration: 0.5,
+                distance: 18,
+              })}
+            >
               <Card className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-white/90 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[var(--shadow-soft)]">
                 <div className="relative h-48 sm:h-56 overflow-hidden">
                   <motion.img
@@ -117,11 +135,14 @@ const Stories = () => {
                   </Button>
                 </CardFooter>
               </Card>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
 
-        <motion.div className="text-center" variants={fadeInUp(0.2)}>
+        <motion.div
+          className="text-center"
+          variants={fadeInFrom("up", { duration: 0.5, distance: 16 })}
+        >
           <Button
             variant="outline"
             size="lg"

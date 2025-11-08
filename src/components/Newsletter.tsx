@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeIn, fadeInFrom, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const danielaPortrait = "/assets/danielabussalleu.jpg";
 
@@ -13,23 +13,23 @@ const Newsletter = () => {
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto" variants={staggerChildren(0.18)}>
-          <motion.div className="space-y-6" variants={staggerChildren(0.12)}>
-            <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground" variants={fadeInUp(0.1)}>
+        <motion.div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto" variants={staggerChildren(0.08)}>
+          <motion.div className="space-y-6" variants={staggerChildren(0.06)}>
+            <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground" variants={fadeInFrom("up", { distance: 18 })}>
               Nuestro <span className="text-primary">Equipo</span>
             </motion.h2>
-            <motion.p className="text-lg text-muted-foreground leading-relaxed text-justify" variants={fadeInUp(0.2)}>
+            <motion.p className="text-lg text-muted-foreground leading-relaxed text-justify" variants={fadeInFrom("up", { distance: 16 })}>
               Proyecto liderado por la Lic. Daniela Bussalleu Salcedo (Universidad de Lima), con la asesoría de Maribel Goncálves de
               Freitas, PhD (Pontificia Universidad Católica del Perú), Raúl Loayza-Muro y Bram Leo Willems, PhD (Universidad Peruana
               Cayetano Heredia), y la colaboración de Activos Mineros S.A.C.
             </motion.p>
-            <motion.p className="text-lg text-muted-foreground leading-relaxed text-justify" variants={fadeInUp(0.25)}>
+            <motion.p className="text-lg text-muted-foreground leading-relaxed text-justify" variants={fadeInFrom("up", { distance: 16, delay: 0.04 })}>
               El proyecto cuenta también con la participación de jóvenes voluntarios y estudiantes locales comprometidos con la
               reconstrucción de la memoria colectiva de La Oroya.
             </motion.p>
           </motion.div>
 
-          <motion.div className="flex justify-center" variants={scaleIn(0.2)}>
+          <motion.div className="flex justify-center" variants={scaleIn(0.05)}>
             <motion.img
               src={danielaPortrait}
               alt="Daniela Bussalleu Salcedo"

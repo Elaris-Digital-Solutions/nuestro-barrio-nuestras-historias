@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import purposeImage from "@/assets/community-purpose.jpg";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeIn, fadeInFrom, staggerChildren, viewportSettings } from "@/lib/motion";
 
 const PURPOSE_SECTIONS = [
   {
@@ -54,30 +54,30 @@ const Purpose = () => {
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="grid md:grid-cols-2 gap-12 items-center" variants={staggerChildren(0.18)}>
+        <motion.div className="grid md:grid-cols-2 gap-12 items-center" variants={staggerChildren(0.08)}>
           {/* Image */}
-          <motion.div className="order-2 md:order-1" variants={fadeInUp(0.1)}>
+          <motion.div className="order-2 md:order-1" variants={fadeInFrom("up", { distance: 16 })}>
             <motion.img
               src={purposeImage}
               alt="Comunidad compartiendo historias"
               className="rounded-2xl shadow-[var(--shadow-soft)] w-full h-auto"
               initial={{ scale: 0.92, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               viewport={viewportSettings}
             />
           </motion.div>
 
           {/* Content */}
-          <motion.div className="order-1 md:order-2 space-y-6" variants={staggerChildren(0.12)}>
-            <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground" variants={fadeInUp(0.15)}>
+          <motion.div className="order-1 md:order-2 space-y-6" variants={staggerChildren(0.06)}>
+            <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground" variants={fadeInFrom("up", { distance: 18 })}>
               {currentSection.title} <span className="text-primary">{currentSection.highlight}</span>
             </motion.h2>
             {currentSection.description.map((paragraph, index) => (
               <motion.p
                 key={index}
                 className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
-                variants={fadeInUp(0.2 + index * 0.1)}
+                variants={fadeInFrom("up", { distance: 14, delay: index * 0.04 })}
               >
                 {paragraph}
               </motion.p>
@@ -86,7 +86,7 @@ const Purpose = () => {
         </motion.div>
 
         {/* Navigation */}
-        <motion.div className="mt-16 flex items-center justify-center gap-8" variants={fadeInUp(0.3)}>
+        <motion.div className="mt-16 flex items-center justify-center gap-8" variants={fadeInFrom("up", { distance: 16 })}>
           <Button
             type="button"
             onClick={goToPrevious}

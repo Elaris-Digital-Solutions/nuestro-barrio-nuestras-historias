@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
+import { fadeInFrom, sectionReveal, staggerChildren, viewportSettings } from "@/lib/motion";
 import { Carousel } from "@/components/ui/carousel";
 
 const slides = [
@@ -53,26 +53,35 @@ const ExposicionFotografica = () => {
       initial="hidden"
       whileInView="visible"
       viewport={viewportSettings}
-      variants={fadeIn()}
+  variants={sectionReveal({ delayChildren: 0.05, staggerChildren: 0.08 })}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-12" variants={staggerChildren(0.12)}>
-          <motion.h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4" variants={fadeInUp(0.1)}>
+        <motion.div
+          className="text-center mb-12"
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.04 })}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
+            variants={fadeInFrom("up", { distance: 18 })}
+          >
             Exposición <span className="text-primary">Fotográfica</span>
           </motion.h2>
-          <motion.p className="text-lg text-muted-foreground max-w-3xl mx-auto" variants={fadeInUp(0.2)}>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-3xl mx-auto"
+            variants={fadeInFrom("up", { distance: 16 })}
+          >
             En esta sección se presentarán las fotografías y textos elaborados durante el proceso de fotovoz, resultado del trabajo
             reflexivo y creativo de las/os participantes.
           </motion.p>
         </motion.div>
 
-        <motion.div variants={fadeInUp(0.2)}>
+        <motion.div variants={fadeInFrom("up", { duration: 0.5, distance: 18 })}>
           <Carousel slides={slides} />
         </motion.div>
 
         <motion.p
           className="text-lg text-muted-foreground max-w-3xl mx-auto mt-16 md:mt-20 text-center"
-          variants={fadeInUp(0.3)}
+          variants={fadeInFrom("up", { duration: 0.5, distance: 16 })}
         >
           A través de estas imágenes y relatos, buscamos visibilizar las miradas, experiencias y mensajes de la comunidad.
         </motion.p>

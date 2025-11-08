@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { fadeInFrom, scaleIn, sectionReveal, staggerChildren } from "@/lib/motion";
 
 const heroVideo = "/assets/video-hero.mp4";
 const heroPosterWebp = "/assets/video-hero-poster.webp";
@@ -24,15 +25,20 @@ const Hero = () => {
     <motion.section
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      initial="initial"
-      animate="animate"
-      variants={{
-        initial: { opacity: 0 },
-        animate: { opacity: 1, transition: { duration: 1 } },
-      }}
+      initial="hidden"
+      animate="visible"
+      variants={sectionReveal({ duration: 0.55, delayChildren: 0.04, staggerChildren: 0.08 })}
     >
       {/* Background — solo imagen WebP y video */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div
+        className="absolute inset-0 overflow-hidden bg-black will-change-[opacity]"
+        style={{
+          backgroundImage: `url(${heroPosterFallback})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         {/* Imagen base (siempre visible hasta que el video esté listo) */}
         <picture
           className={`absolute inset-0 transition-opacity duration-700 ease-out ${
@@ -66,18 +72,16 @@ const Hero = () => {
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
-      </div>
+  </div>
 
       {/* Contenido principal */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center">
+      <motion.div
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center"
+        variants={staggerChildren({ stagger: 0.08, delayChildren: 0.02 })}
+      >
         <motion.h1
           className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight"
-          initial={{ y: 40, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.8, ease: "easeOut" },
-          }}
+          variants={fadeInFrom("up", { duration: 0.5, distance: 18, delay: 0 })}
         >
           Nuestro Barrio,
           <br />
@@ -86,12 +90,7 @@ const Hero = () => {
 
         <motion.p
           className="text-base sm:text-2xl text-white mb-8 sm:mb-10 max-w-3xl mx-auto italic"
-          initial={{ y: 40, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.8, ease: "easeOut", delay: 0.2 },
-          }}
+          variants={fadeInFrom("up", { duration: 0.5, distance: 16, delay: 0.04 })}
         >
           Queremos reconstruir la memoria viva de La Oroya a través de las voces,
           ojos y experiencias de sus propios habitantes.
@@ -99,31 +98,30 @@ const Hero = () => {
 
         <motion.div
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
-          initial={{ y: 40, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.8, ease: "easeOut", delay: 0.4 },
-          }}
+          variants={staggerChildren({ stagger: 0.08, delayChildren: 0.04 })}
         >
-          <Button
-            variant="hero"
-            size="lg"
-            className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white"
-            onClick={() => handleScrollTo("#conoce-el-proyecto")}
-          >
-            Conoce el Proyecto
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white border-white hover:bg-white hover:text-primary"
-            onClick={() => handleScrollTo("#exposicion")}
-          >
-            Exposición Fotográfica
-          </Button>
+          <motion.div variants={scaleIn(0)}>
+            <Button
+              variant="hero"
+              size="lg"
+              className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white"
+              onClick={() => handleScrollTo("#conoce-el-proyecto")}
+            >
+              Conoce el Proyecto
+            </Button>
+          </motion.div>
+          <motion.div variants={scaleIn(0)}>
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-base sm:text-lg px-6 py-4 sm:px-8 sm:py-6 text-white border-white hover:bg-white hover:text-primary"
+              onClick={() => handleScrollTo("#exposicion")}
+            >
+              Exposición Fotográfica
+            </Button>
+          </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </motion.section>
   );
 };

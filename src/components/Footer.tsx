@@ -20,7 +20,7 @@ const Footer = () => {
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div className="grid md:grid-cols-3 gap-8 mb-8" variants={staggerChildren(0.18)}>
+  <motion.div className="grid md:grid-cols-3 gap-8 mb-8" variants={staggerChildren(0.08)}>
           {/* Logo and Description */}
           <motion.div className="space-y-4" variants={fadeInUp(0.1)}>
             <motion.img
