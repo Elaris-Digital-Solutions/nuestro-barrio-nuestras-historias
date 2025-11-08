@@ -147,12 +147,16 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-2 rounded-lg hover:bg-muted"
+            className="md:hidden p-2 text-primary"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label="Alternar menú"
             whileTap={{ scale: 0.9 }}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? (
+              <X className="h-6 w-6" strokeWidth={2.2} />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={2.2} />
+            )}
           </motion.button>
         </motion.div>
 
