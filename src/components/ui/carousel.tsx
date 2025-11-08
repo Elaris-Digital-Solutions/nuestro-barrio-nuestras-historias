@@ -1,7 +1,7 @@
 "use client";
 
 import { IconArrowNarrowRight } from "@tabler/icons-react";
-import { useState, useRef, useId, useEffect } from "react";
+import { useState, useRef, useId, useEffect, useMemo } from "react";
 import type { MouseEvent, SyntheticEvent } from "react";
 
 interface SlideData {
@@ -157,17 +157,27 @@ interface CarouselProps {
 }
 
 export function Carousel({ slides }: CarouselProps) {
-  if (slides.length === 0) {
-    return null;
-  }
-
+  const hasSlides = slides.length > 0;
   const hasLoop = slides.length > 1;
-  const extendedSlides = hasLoop
-    ? [slides[slides.length - 1], ...slides, slides[0]]
-    : [...slides];
 
-  const [current, setCurrent] = useState(hasLoop ? 1 : 0);
-  const [isAnimating, setIsAnimating] = useState(true);
+  const extendedSlides = useMemo(() => {
+    if (!hasLoop) {
+      return [...slides];
+    }
+
+    const first = slides[0];
+    const last = slides[slides.length - 1];
+
+    return [last, ...slides, first];
+  }, [hasLoop, slides]);
+
+  const [current, setCurrent] = useState(() => (hasLoop ? 1 : 0));
+  const [isAnimating, setIsAnimating] = useState(hasLoop);
+
+  useEffect(() => {
+    setCurrent(hasLoop ? 1 : 0);
+    setIsAnimating(hasLoop);
+  }, [hasLoop, slides.length]);
 
   useEffect(() => {
     if (!hasLoop || isAnimating) {
@@ -192,7 +202,22 @@ export function Carousel({ slides }: CarouselProps) {
   };
 
   const handleSlideClick = (index: number) => {
-    setCurrent(hasLoop ? index : index);
+    if (!hasLoop) {
+      setCurrent(index);
+      return;
+    }
+
+    if (index === 0) {
+      setCurrent(slides.length);
+      return;
+    }
+
+    if (index === extendedSlides.length - 1) {
+      setCurrent(1);
+      return;
+    }
+
+    setCurrent(index);
   };
 
   const handleDotClick = (index: number) => {
@@ -212,6 +237,11 @@ export function Carousel({ slides }: CarouselProps) {
   };
 
   const id = useId();
+
+  if (!hasSlides) {
+    return null;
+  }
+
   const baseSlides = hasLoop ? extendedSlides : slides;
   const step = 100 / baseSlides.length;
   const translate = current * step;

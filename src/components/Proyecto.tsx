@@ -3,8 +3,8 @@
   - Corrección de Centrado (Enfoque Directo): Se han eliminado los componentes `Reveal` que envolvían los textos, ya que interferían con el centrado. Las animaciones y clases de centrado (`text-center`, `mx-auto`) se aplican ahora directamente a los elementos `motion.h2` y `motion.p` para garantizar su alineación.
   - Robustez de la Cuadrícula Flexbox: Se ha refinado el contenedor de las tarjetas para ser más explícito. Usando `flex`, `flex-wrap`, y `justify-center`, se asegura que la última fila de tarjetas se centre correctamente. Se han ajustado las clases de ancho (`w-full`, `md:w-1/2`, `lg:w-[31%]`) en las tarjetas para crear un diseño de 3 columnas en pantallas grandes que se adapta y centra correctamente en todos los casos.
 */
-import { motion } from 'framer-motion';
-import { Camera, Map, Drama, Heart, Clock } from 'lucide-react';
+import { motion, type Transition, type Variants } from "framer-motion";
+import { Camera, Map, Drama, Heart, Clock } from "lucide-react";
 
 const methodologies = [
   {
@@ -34,25 +34,27 @@ const methodologies = [
   }
 ];
 
-const textAnimation = {
+const textTransition: Transition = { duration: 0.6, ease: "easeOut" };
+
+const textAnimation: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } }
+  visible: { opacity: 1, y: 0, transition: textTransition },
 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as any }
-  }
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
 };
 
 const Proyecto = () => {
