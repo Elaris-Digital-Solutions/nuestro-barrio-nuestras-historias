@@ -48,10 +48,10 @@ const Hero = () => {
           animate={{ y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
         >
           <Button variant="hero" size="lg" className="text-lg px-8 py-6">
-            Conoce Más
+            Conoce el Proyecto
           </Button>
           <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-            <a href="#historias">Ver Historias</a>
+            <a href="#Exposicion Fotografica">Exposición</a>
           </Button>
         </motion.div>
       </div>

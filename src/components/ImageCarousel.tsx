@@ -8,9 +8,10 @@ type Slide = {
 interface ImageCarouselProps {
   slides: Slide[];
   className?: string;
+  showCaption?: boolean;
 }
 
-const ImageCarousel: React.FC<ImageCarouselProps> = ({ slides, className }) => {
+const ImageCarousel: React.FC<ImageCarouselProps> = ({ slides, className, showCaption = true }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -65,7 +66,9 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ slides, className }) => {
               alt={slide.caption ?? `Slide ${idx + 1}`}
               className="image-carousel__img"
             />
-            <div className="image-carousel__caption">{slide.caption}</div>
+            {showCaption && (
+              <div className="image-carousel__caption">{slide.caption}</div>
+            )}
           </div>
         );
       })}

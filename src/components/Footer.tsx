@@ -76,13 +76,6 @@ const Footer = () => {
                 <span>daniela.bussalleu@upch.pe</span>
               </a>
               <a
-                href="tel:+51902749147"
-                className="flex items-center gap-3 hover:text-primary-foreground transition-colors"
-              >
-                <Phone className="w-5 h-5" />
-                <span>+51 902 749 147</span>
-              </a>
-              <a
                 href="https://www.instagram.com/daniela.bussalleu?igsh=cXptdDJ5OGZoZmhs"
                 target="_blank"
                 rel="noreferrer"

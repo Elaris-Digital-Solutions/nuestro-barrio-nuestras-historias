@@ -1,9 +1,19 @@
-import purposeImage from "@/assets/community-purpose.jpg";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerChildren, viewportSettings } from "@/lib/motion";
+import ImageCarousel from "@/components/ImageCarousel";
+import { fadeIn, fadeInUp, scaleIn, staggerChildren, viewportSettings } from "@/lib/motion";
+
+const slides = [
+  {
+    image: "/assets/Nosotros1.png",
+    caption: "Nos reunimos para imaginar juntas el barrio que soñamos",
+  },
+  {
+    image: "/assets/Nosotros2.jpg",
+    caption: "Historias y memorias que siguen latiendo en La Oroya",
+  },
+];
 
 const QuienesSomosSection = () => {
-
   return (
     <motion.section
       id="quienes-somos"
@@ -14,17 +24,13 @@ const QuienesSomosSection = () => {
       variants={fadeIn()}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="grid md:grid-cols-2 gap-12 items-center" variants={staggerChildren(0.18)}>
-          {/* Imagen */}
-          <motion.div className="order-2 md:order-1" variants={fadeInUp(0.1)}>
-            <motion.img
-              src={purposeImage}
-              alt="Comunidad compartiendo historias"
-              className="rounded-2xl shadow-[var(--shadow-soft)] w-full h-auto"
-              initial={{ scale: 0.92, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              viewport={viewportSettings}
+  <motion.div className="grid md:grid-cols-2 gap-12 md:items-stretch" variants={staggerChildren(0.18)}>
+          {/* Carrusel */}
+          <motion.div className="order-2 md:order-1 h-full" variants={scaleIn(0.1)}>
+            <ImageCarousel
+              slides={slides}
+              className="w-full h-full min-h-[22rem] md:min-h-0 rounded-3xl overflow-hidden shadow-[var(--shadow-soft)]"
+               showCaption={false}
             />
           </motion.div>
 
